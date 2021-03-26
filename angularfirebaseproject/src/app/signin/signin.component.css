@@ -1,0 +1,97 @@
+.input-container {
+  /* border: 3px solid black; */
+  display: block;
+  width: 333px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: white;
+}
+.input{
+    padding: 8px;
+}
+
+#signin{
+    margin-right: 10px;
+    padding-left: 45%;
+    padding-right: 45%;
+    background-color: rgb(150, 233, 142);
+    border-radius: 4px;
+}
+#signup{
+    margin-right: 10px;
+    margin-top: 5px;
+    padding-left: 45%;
+    padding-right: 45%;
+    background-color: rgb(236, 247, 168);
+    border-radius: 4px;
+}
+#edit{
+    margin-right: 10px;
+    background-color: rgb(120, 236, 110);
+    border-radius: 4px;
+}
+mat-grid-tile{
+    background-color: rgb(193, 193, 225);
+    font-size: 20px;
+}
+#google-button{
+
+    margin-top: 10px;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    padding-left:30px;
+    padding-right: 30px;
+}
+#facebook-button{
+    margin-left: 25px;
+    padding-left:30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    background-color: rgb(93, 93, 186)
+}
+#github-button{
+    margin-left: 25px;
+    margin-top: 5px;
+    padding-left:30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: thistle;
+}
+.containt{
+    margin-left: 30%;
+}
+.signinimage {
+  width: 90%;
+}
+.containt {
+  position: relative;
+  font-weight: bold;
+  margin-left: 40%;
+}
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav,
+mat-sidenav-content {
+  padding: 16px;
+}
+mat-sidenav {
+  background-color: white;
+  width: 250px;
+}
+.menuitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: black;
+}
+

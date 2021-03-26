@@ -1,0 +1,28 @@
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Issue Name</th>
+        <th scope="col">Status</th>
+    </tr>
+</thead>
+
+<tbody>
+   
+
+        <tr *ngFor="let data of userservice.issue; index as i" (click)="openSnackBar(data.title,'Clicked') " (click)="issuedetails(data)" >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+                <ngb-highlight [result]="data.title"></ngb-highlight>
+            </td>
+            <td><ngb-highlight [result]="data.status" ></ngb-highlight></td>
+        </tr>
+
+    </tbody>
+</table>
+  <!-- <button (click)="update('4fc2442c-0243-40d4-a60a-eab00195e73b')">update</button> -->
+  
+</div>
+

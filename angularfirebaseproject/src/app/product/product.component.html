@@ -1,0 +1,71 @@
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav mode="push" [(opened)]="authservice.opened" >
+      <a class="menuitem" routerLink="/home"> <mat-icon>home</mat-icon> Home </a>
+      <a class="menuitem" routerLink="/product"> <mat-icon>shoping</mat-icon> Product </a>
+      <button mat-button class="menuitem logout" (click)="authservice.logout()"> <mat-icon>logout</mat-icon> Logout </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <form class="example-form" [formGroup]="formtemplate">
+        <mat-form-field class="example-full-width">
+          <input formControlName="name" matInput placeholder="Product Name" />
+          <mat-error>this field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <textarea
+            formControlName="discription"
+            matInput
+            placeholder="Product discription"
+          ></textarea>
+          <mat-error>this field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="category" placeholder="Product category">
+            <mat-option>None</mat-option>
+            <mat-option value="cpu">cpu</mat-option>
+            <mat-option value="harddisk">hard disk</mat-option>
+            <mat-option value="ram">ram</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input
+            formControlName="price"
+            matInput
+            type="number"
+            placeholder="Price"
+          />
+          <mat-error>this field is required</mat-error>
+        </mat-form-field>
+        <div>
+          Select Image :
+          <input
+            accept="image/*"
+            formControlName="image1"
+            type="file"
+            (change)="onfileselected($event)"
+            id="file1"
+            #productphoto
+            name="image"
+            autocomplete="off"
+            multiple
+          />
+          <p><ngb-progressbar [showValue]="true" type="success" [value]="progress"></ngb-progressbar></p>
+          <li *ngFor="let image of imagelist">{{ image }}</li>
+        </div>
+        <!-- <div>select image 2: <input accept="image/*" formControlName="image2" type="file" (change)="onfileselected($event)" id="file2" #productphoto name="image" autocomplete="off" /></div> -->
+        <div class="button">
+          <button
+            id="submit"
+            mat-raised-button
+            color="primary"
+            (click)="onsubmit(formtemplate.value)"
+          >
+            Submit
+          </button>
+          <button id="cancle" mat-raised-button color="accent" type="reset" (click)="cancle()">
+            Cancle
+          </button>
+        </div>
+      </form>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+

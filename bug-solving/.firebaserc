@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "get-issues": {
+      "hosting": {
+        "bug-solving": [
+          "get-issues"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="push" [(opened)]="authservice.opened">
+    <a class="menuitem" routerLink="/home"> <mat-icon>home</mat-icon> Home </a>
+    <a class="menuitem" routerLink="/product">
+      <mat-icon>shoping</mat-icon> Product
+    </a>
+    <button mat-button class="menuitem logout" (click)="authservice.logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <div class="productimage">
+        <!-- <p>this is test</p> -->
+        <app-carousel></app-carousel>
+      </div>
+      <div class="productdetail">
+        <span >Product Details</span>
+        <!-- <li>{{ data.id }}</li> -->
+        <li>Name :- <span>{{ authservice.data.name }}</span> </li>
+        <li>Category :- <span>{{ authservice.data.category }}</span></li>
+        <li>Discription:- <span>{{ authservice.data.discription }}</span></li>
+        <li>Price :- <span>{{ authservice.data.price }}Rs.</span> </li>
+      </div>
+    </div> 
+  </mat-sidenav-content>
+</mat-sidenav-container>

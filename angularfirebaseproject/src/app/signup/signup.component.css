@@ -1,0 +1,20 @@
+.input-container{
+    border: 3px solid black;
+    display:block;
+    padding: 40px;
+    width: 200px;
+    margin: 0 auto;
+    background-color: rgb(243, 237, 230);
+}
+.input{
+    padding: 8px;
+}
+
+#signup{
+    margin-right: 10px;
+    margin-top: 5px;
+    padding-left: 45%;
+    padding-right: 45%;
+    background-color: rgb(236, 247, 168);
+    border-radius: 4px;
+}

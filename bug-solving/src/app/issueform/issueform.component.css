@@ -1,0 +1,29 @@
+.inputform {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  .form{
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: auto;
+      width: 500px;
+      /* justify-content: center; */
+      margin: 0 auto;
+      padding: 20px;
+      margin-top: 5px;
+      
+  }
+  button{
+      margin: 10px;
+  }
+  ngb-progressbar{
+      width: 40%;
+      background-color: white;
+  }

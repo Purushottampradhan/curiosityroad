@@ -1,0 +1,73 @@
+
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="push" [(opened)]="authservice.opened">
+      <a class="menuitem" routerLink="/home"> <mat-icon>home</mat-icon> Home </a>
+      <a class="menuitem" routerLink="/product"> <mat-icon>shoping</mat-icon> Product </a>
+      <button mat-button class="menuitem logout" (click)="authservice.logout()"> <mat-icon>logout</mat-icon> Logout </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class=input-container>
+            <img class="signinimage" src="https://firebasestorage.googleapis.com/v0/b/shoping-card-bc6da.appspot.com/o/productimage%2F1616044415635?alt=media&token=da801caf-5086-4173-991c-c73c8dbeda5a" alt="">
+            <span class="containt">Sign In</span>
+            <div id="firebaseui-auth-container"></div>
+        </div>
+        
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+    <!-- <form  #userpost="ngForm" >
+
+        <div class='input'>
+            <mat-form-field class="example-full-width">
+                <mat-label>Enter email</mat-label>
+                <input matInput required #message maxlength="256" id="email" type="email" name='email' [(ngModel)]="userobj.email" >
+                <mat-error>email is required</mat-error>
+                <mat-error>You must enter name </mat-error>
+            </mat-form-field>
+        </div>
+        <div class='input'>
+            <mat-form-field>
+                <mat-label>Enter password</mat-label>
+                <input matInput required [(ngModel)]="userobj.password" name="password" id="password" [type]="hide ? 'password' : 'text'">
+                <mat-error>password is required</mat-error>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class='btn'>
+            <button mat-button id='signin' type="signin" (click)="authService.onsignin(userpost.value)" >signin</button>
+            <p>Dont have account?<a routerLink='/signup'>signup</a></p>
+            
+        </div>
+        <p class="containt">or using </p>
+    </form> -->
+
+    <!-- <div>
+    
+        <button type="button" id ="google-button"(click)="authService.GoogleAuth()" >
+            Log in with Google 
+        </button>
+    </div>
+    <div>
+        
+    <button type="button" id ="github-button"(click)="authService.githubAuth()" >
+        Log in with Github
+    </button>
+</div>
+<div>
+    
+    <button type="button" id ="facebook-button"(click)="authService.facbookAuth()" >
+        Log in with facbook
+    </button>
+</div> -->
+
+
+
+
+
+
+<!-- <div class="formGroup"> -->
+    <!-- <br><br>
+    <button type="button" (click)="authService.GoogleAuth()" >
+      Log in with Google
+    </button> -->
+  <!-- </div> -->

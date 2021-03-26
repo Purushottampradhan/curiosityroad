@@ -1,0 +1,12 @@
+/* #carousel{
+    height: 400px;
+    width: 400px;
+    /* background-color: chartreuse; */
+/* } */ 
+.picsum-img-wrapper{
+    /* display: flex; */
+    height: auto;
+    width: 225px;
+    overflow: hidden;
+    background:none;
+}

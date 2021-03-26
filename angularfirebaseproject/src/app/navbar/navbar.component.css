@@ -1,0 +1,30 @@
+mat-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.userimage {
+  height: 30px;
+  border-radius: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.link {
+  text-decoration: none;
+  color: white;
+}
+.userdetails {
+  display: flex;
+  flex-direction: row;
+  display: block;
+  flex-wrap: wrap;
+
+  margin: 5px;
+  justify-items: center;
+  /* border: 1px solid red; */
+}
+.example-spacer {
+  flex: 1 1 auto;
+}

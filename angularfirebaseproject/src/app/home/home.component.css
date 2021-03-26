@@ -1,0 +1,65 @@
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav,
+mat-sidenav-content {
+  padding: 16px;
+  background-color: rgb(187, 183, 183);
+}
+mat-sidenav {
+  background-color: white;
+  width: 250px;
+}
+.menuitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: black;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-card {
+
+  display: flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  display: inline-block;
+  height: 200px;
+  width: 30%;
+  margin: 9px;
+  /* justify-content: space-around; */
+  /* background-color:white; */
+}
+mat-card-title {
+  /* font-size: 20px; */
+  text-align: center;
+}
+.userdetails {
+  display: flex;
+  flex-direction: row;
+  display: block;
+  flex-wrap: wrap;
+  margin: 5px;
+  justify-items: center;
+  /* border: 1px solid red; */
+}
+.image {
+  /* border: 1px solid red; */
+  position: relative;
+  height: 50%;
+  width: 30%;
+  float: left;
+}
+mat-card-subtitle{
+margin-top: 20px;
+position: relative;
+}
+
+mat-card:hover{
+background-color: whitesmoke;
+}

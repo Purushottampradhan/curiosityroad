@@ -1,0 +1,21 @@
+mat-sidenav-content {
+  height: 100vh;
+}
+.menuitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: black;
+}
+mat-sidenav {
+  background-color: white;
+  width: 250px;
+}
+mat-sidenav,
+mat-sidenav-content {
+  padding: 16px;
+  background-color: rgb(187, 183, 183);
+}

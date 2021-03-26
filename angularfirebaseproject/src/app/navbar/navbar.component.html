@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="authservice.togglesidebar()"  >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Shoping Card</span>
+    <span class="example-spacer"></span>
+          <span>{{name}}</span>
+        <img class="userimage" src="{{photo}}" >
+        <span *ngIf="name"><button mat-button (click)="authservice.logout()">Sign Out</button></span>
+        <span *ngIf="!name"><a class="link" routerLink="/signin">Sign In</a></span>
+  </mat-toolbar>

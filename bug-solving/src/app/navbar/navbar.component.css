@@ -1,0 +1,40 @@
+mat-toolbar {
+  /* background-color: blue; */
+    display: flex;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: auto;
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .userimage {
+    height: 30px;
+    border-radius: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }  
+  .link {
+    text-decoration: none;
+    color: white;
+  }
+.menu{
+  text-decoration: none;
+  margin: 10px;
+  font-size: 1rem;
+
+}
+.menu a{
+  text-decoration: none;
+  color: white;
+}
+#dropdownBasic1{
+  background:none;
+  color: white;
+  border: none;
+}
+.menulink a{
+  color: black;
+}

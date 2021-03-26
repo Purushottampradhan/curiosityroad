@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  
+    <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Bug Solving</span>
+  <span class="menu">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >Project</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div class="menulink">
+          <a routerLink="/project">Project</a>
+        </div>
+        <div class="menulink">
+          <a routerLink="/createproject">Create</a>
+        </div>
+      </div>
+    </div>
+  </span>
+  <span class="menu"><a routerLink="/allissue">All Issue</a></span>
+  <span class="menu"><a routerLink="/issueform">CreateIssue</a></span>
+  <span class="example-spacer"></span>
+  <span>{{ name }}</span>
+  <img class="userimage" src="{{ photo }}" />
+  <span *ngIf="name" ><button mat-button (click)="userservice.logout()" >Sign Out</button></span>
+  <span *ngIf="!name"><a class="link" routerLink="/signin">Sign In</a></span>
+</mat-toolbar>

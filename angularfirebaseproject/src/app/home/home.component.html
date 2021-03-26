@@ -1,0 +1,22 @@
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="push" [(opened)]="authservice.opened">
+    <a class="menuitem" routerLink="/home"> <mat-icon>home</mat-icon> Home </a>
+    <a class="menuitem" routerLink="/product"> <mat-icon>shoping</mat-icon> Product </a>
+    <button mat-button class="menuitem logout" (click)="authservice.logout()"> <mat-icon>logout</mat-icon> Logout </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      
+    <mat-card *ngFor="let data of val" (click)="carddetails(data)" id={{data.id}}>
+        <div class="userdetails">
+            <mat-card-title>{{ data.name }}</mat-card-title>
+            <img src="{{ data.image[0] }}" class="image" />
+            <!-- <img src="{{ data.image[1] }}" class="image" /> --> 
+            <mat-card-subtitle ><li>{{data.discription }}</li>
+                <li> price: {{data.price}}</li>
+                <li>category:{{data.category}}</li>
+            </mat-card-subtitle>
+            </div>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

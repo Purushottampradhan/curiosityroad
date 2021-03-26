@@ -1,0 +1,12 @@
+mat-card{
+    margin:20px;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    display: inline-block;
+    width: 30%;
+}
+mat-card-title{
+    text-align: center;
+}
