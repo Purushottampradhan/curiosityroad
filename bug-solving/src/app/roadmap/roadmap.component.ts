@@ -18,15 +18,15 @@ export class RoadmapComponent implements OnInit {
     private router:Router
   ) {}
   openSnackBar(message: string, action: string) {
-    this.router.navigate(['/issuedetails']);
+  
     this.snakbar.open(message, action, {
       duration: 2000,
     });
   }
   //get issue details
   issuedetails(data:any){
-    console.log(data)
-
+    // console.log(data)
+    this.router.navigate([`/allissue/${data.issue_id}`])
   }
   ngOnInit(): void {}
   update(data: any) {

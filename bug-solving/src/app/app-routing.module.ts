@@ -39,7 +39,7 @@ const routes: Routes = [
   component:RoadmapComponent
 },
 {
-  path:'issuedetails',
+  path:'allissue/:id',
   component:IssuedetailComponent
 }
 

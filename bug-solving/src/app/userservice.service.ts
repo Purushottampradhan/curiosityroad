@@ -85,6 +85,20 @@ export class UserserviceService implements OnInit {
             console.log(error);
           });
   }
+  //get one issue from selected list
+  getone(id:any) {
+    this.firestore
+      .collection('issues')
+      .doc(id)
+      .valueChanges()
+      .subscribe(
+        (data) => {
+          console.log(data);
+          
+        },
+        (err) => console.log(err)
+      );
+  }
   //get issue list
   issuelist() {
     this.firestore
