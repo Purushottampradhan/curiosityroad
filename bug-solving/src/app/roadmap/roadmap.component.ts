@@ -26,7 +26,7 @@ export class RoadmapComponent implements OnInit {
   //get issue details
   issuedetails(data:any){
     // console.log(data)
-    this.router.navigate([`/allissue/${data.issue_id}`])
+    this.router.navigate([`/project/allissue/${data.issue_id}`])
   }
   ngOnInit(): void {}
   update(data: any) {

@@ -5,49 +5,53 @@ import { CreateprojectComponent } from './createproject/createproject.component'
 import { IssuedetailComponent } from './issuedetail/issuedetail.component';
 import { IssueformComponent } from './issueform/issueform.component';
 import { ProjectComponent } from './project/project.component';
+import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 import { RoadmapComponent } from './roadmap/roadmap.component';
 import { SigninComponent } from './signin/signin.component';
 const routes: Routes = [
-  {path:"",
-  component:ProjectComponent
-
+  { path: '',redirectTo:'project',pathMatch:'full'},
+  {
+    path: 'signin',
+    component: SigninComponent,
   },
-{
-  path:"signin",
-  component:SigninComponent
-},
-{
-  path:"issueform",
-  canActivate:[AuthguardGuard],
-  component:IssueformComponent
-},
-{
-  path:"project",
-  component:ProjectComponent
-},
-{
-  path:"project/:id",
-  component:ProjectComponent
-},
-{
-  path:'createproject',
-  canActivate:[AuthguardGuard],
-  component:CreateprojectComponent
-},
-{
-  path:'allissue',
-  component:RoadmapComponent
-},
-{
-  path:'allissue/:id',
-  component:IssuedetailComponent
-}
 
-
+  {
+    path: 'project',
+    children: [
+      {
+        path:'',
+        component:ProjectComponent
+    
+      },
+      {
+        path: 'issueform',
+        canActivate: [AuthguardGuard],
+        component: IssueformComponent,
+      },
+      {
+        path: 'allissue',
+        component: RoadmapComponent,
+      },
+      {
+        path: 'allissue/:id',
+        component: IssuedetailComponent,
+      },
+    ],
+  },
+  {
+    path: 'project/:id',
+    component: ProjectdetailsComponent,
+  },
+ 
+  {
+    path: 'createproject',
+    canActivate: [AuthguardGuard],
+    component: CreateprojectComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
@@ -16,13 +16,22 @@ export class UserserviceService implements OnInit {
   user = {
     user_id: '',
     username: '',
-    image:"",
-    email:'',
+    image: '',
+    email: '',
+  };
+  projectdetails = {
+    id: '',
+    name: '',
+    discription: '',
   };
   uuid: any;
   val: any;
   issue: any;
   currentuser: any;
+  yourissue: any;
+  yourproject: any;
+  //  yourprojectname:any
+  // yourprojectid: any;
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -45,9 +54,7 @@ export class UserserviceService implements OnInit {
       }
     );
   }
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   //user login
   onlogin() {
@@ -69,32 +76,58 @@ export class UserserviceService implements OnInit {
 
   //user login details store
   userlogin() {
-    this.user.user_id=this.currentuser.uid;
-    this.user.username=this.currentuser.displayName;
-    this.user.image=this.currentuser.photoURL;
-    this.user.email=this.currentuser.email;
+    this.user.user_id = this.currentuser.uid;
+    this.user.username = this.currentuser.displayName;
+    this.user.image = this.currentuser.photoURL;
+    this.user.email = this.currentuser.email;
 
-        this.firestore
-          .collection('users')
-          .doc(this.currentuser.uid)
-          .set(this.user)
-          .then(() => {
-            // console.log('user sucessfully added');
-          })
-          .catch((error: any) => {
-            console.log(error);
-          });
+    this.firestore
+      .collection('users')
+      .doc(this.currentuser.uid)
+      .set(this.user)
+      .then(() => {
+        // console.log('user sucessfully added');
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   }
   //get one issue from selected list
-  getone(id:any) {
+  getone(id: any) {
     this.firestore
       .collection('issues')
       .doc(id)
       .valueChanges()
       .subscribe(
         (data) => {
-          console.log(data);
-          
+          if(data){
+            
+
+          }
+          else{
+            console.log("data not found")
+            this.router.navigate(['/project'])
+          }
+        },
+        (err) => console.log(err)
+      );
+  }
+  //get one project
+  getproject(id: any) {
+    this.firestore
+      .collection('project')
+      .doc(id)
+      .valueChanges()
+      .subscribe(
+        (data) => {
+          // console.log(data);
+          this.yourproject = data;
+          // this.yourprojectname=this.yourproject.project_name;
+          // this.yourprojectid=this.yourproject.project_id;
+          this.projectdetails.id = this.yourproject.project_id;
+          this.projectdetails.name = this.yourproject.project_name;
+          this.projectdetails.discription = this.yourproject.discription;
+          console.log(this.projectdetails);
         },
         (err) => console.log(err)
       );

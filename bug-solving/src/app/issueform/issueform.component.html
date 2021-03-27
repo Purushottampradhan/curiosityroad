@@ -15,6 +15,7 @@
           </mat-form-field>
           <mat-form-field >
             <mat-select  formControlName="category" placeholder="select project" >
+              <!-- <mat-option [value]="userservice.projectdetails.id" >{{userservice.projectdetails.name}}</mat-option> -->
               <mat-option *ngFor="let data of userservice.val" [value]="data.project_id">{{data.project_name}}</mat-option>
             </mat-select>
           </mat-form-field>

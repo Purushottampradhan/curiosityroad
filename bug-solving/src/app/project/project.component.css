@@ -6,7 +6,10 @@ mat-card{
     flex-direction: row;
     display: inline-block;
     width: 30%;
+    height: 100px;
 }
 mat-card-title{
+
     text-align: center;
+    /* align-items: center; */
 }

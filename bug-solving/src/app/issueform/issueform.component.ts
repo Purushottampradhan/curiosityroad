@@ -20,7 +20,7 @@ export class IssueformComponent implements OnInit {
   progress: any;
   imagelist: Array<string> = [];
   issue_id: any;
-  user_id:any;
+  user_id: any;
   //form template
   formtemplate = new FormGroup({
     issue: new FormControl(''),
@@ -28,7 +28,7 @@ export class IssueformComponent implements OnInit {
     category: new FormControl(''),
     expectedresult: new FormControl(''),
     replicate: new FormControl(''),
-    image: new FormControl('',Validators.required ),
+    image: new FormControl('', Validators.required),
   });
   constructor(
     private storage: AngularFireStorage,
@@ -84,17 +84,16 @@ export class IssueformComponent implements OnInit {
     if (this.images.length) {
       if (this.formtemplate.valid) {
         this.issue_id = uuidv4();
-        
+
         const details = {
           title: formvalue.issue,
           discription: formvalue.discription,
           project_id: formvalue.category,
-          expectedresult:formvalue.expectedresult,
-          replicate:formvalue.replicate,
+          expectedresult: formvalue.expectedresult,
+          replicate: formvalue.replicate,
           attachements: this.images,
           issue_id: this.issue_id,
-          user_id:this.userservice.currentuser.uid,
-          
+          user_id: this.userservice.currentuser.uid,
         };
         // console.log(details.user_id)
         this.userservice.onsubmit(details);

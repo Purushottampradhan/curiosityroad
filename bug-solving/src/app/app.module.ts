@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatCardModule} from "@angular/material/card"
 import {MatSnackBarModule} from "@angular/material/snack-bar"
+import {MatGridListModule} from '@angular/material/grid-list'
 // import{} from "@angular/material/"
 //angular mateial end
 
@@ -35,6 +36,8 @@ import { ProjectComponent } from './project/project.component';
 import { CreateprojectComponent } from './createproject/createproject.component';
 import { RoadmapComponent } from './roadmap/roadmap.component';
 import { IssuedetailComponent } from './issuedetail/issuedetail.component';
+import { CommonModule } from '@angular/common';
+import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
 //form end
 
 @NgModule({
@@ -48,10 +51,12 @@ import { IssuedetailComponent } from './issuedetail/issuedetail.component';
     CreateprojectComponent,
     RoadmapComponent,
     IssuedetailComponent,
+    ProjectdetailsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserAnimationsModule,
@@ -67,6 +72,7 @@ import { IssuedetailComponent } from './issuedetail/issuedetail.component';
     MatSidenavModule,
     MatCardModule,
     MatSnackBarModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

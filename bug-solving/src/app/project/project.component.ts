@@ -32,6 +32,6 @@ export class ProjectComponent implements OnInit {
   }
 projectdetails(data:any){
   console.log(data)
-  // this.route.navigate([`/project/${data.project_id}`])
+  this.route.navigate([`/project/${data.project_id}`])
 }
 }
