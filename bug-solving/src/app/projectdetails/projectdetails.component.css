@@ -16,7 +16,7 @@
 }
 mat-card{
     height: auto;
-    width: 30%;
+    width: 40%;
     margin: 10px;
 }
 .issuedetails{
@@ -24,13 +24,15 @@ mat-card{
     width: auto;
 
 }
-.createbutton{
+mat-card-actions{
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
-    justify-content:center;
-    align-items: center;
-    height: 200px;
+    margin-top: 10%;
+
+    justify-content:flex-start;
+    /* align-items:center; */
+    /* height: 200px; */
 }
 .oneissue{
     background-color: rgb(225, 231, 231);
@@ -38,6 +40,6 @@ mat-card{
     padding: 10px;
 }
 .issuelist{
-    height: 200px;
+    height: 300px;
     overflow: scroll;
 }

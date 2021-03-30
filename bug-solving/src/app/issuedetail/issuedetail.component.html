@@ -2,12 +2,22 @@
 <div class="container">
   <div class="issuedetails">
      <mat-card>
-        <mat-card-title> this is title</mat-card-title>
-        <mat-card-content>this is discription about project</mat-card-content>
+        <mat-card-title> {{userservice.projectdetails.name}}</mat-card-title>
+        <mat-card-content>{{userservice.projectdetails.discription}}</mat-card-content>
       </mat-card>
       <mat-grid-list cols="2" rowHeight="7:1">
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>Issue Name</mat-grid-tile>
+        <mat-grid-tile>{{userservice.issuedetails.title}}</mat-grid-tile>
+        <mat-grid-tile>Discription</mat-grid-tile>
+        <mat-grid-tile>{{userservice.issuedetails.discription}}</mat-grid-tile>
+        <mat-grid-tile>replicate</mat-grid-tile>
+        <mat-grid-tile>{{userservice.issuedetails.replicate}}</mat-grid-tile>
+        <mat-grid-tile>Expected Result</mat-grid-tile>
+        <mat-grid-tile>{{userservice.issuedetails.expectedresult}}</mat-grid-tile>
+        <mat-grid-tile>Status</mat-grid-tile>
+        <mat-grid-tile>{{userservice.issuedetails.status}}</mat-grid-tile>
+        <mat-grid-tile>Created By</mat-grid-tile>
+        <mat-grid-tile><img class="image" src="{{userservice.userdetails.image}}">{{userservice.userdetails.name}}</mat-grid-tile>
       </mat-grid-list>
   </div>
 </div>

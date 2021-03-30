@@ -1,9 +1,15 @@
 <mat-grid-list cols="1" rowHeight="2:.1">
-    <mat-grid-tile  *ngFor="let data of userservice.issue; index as i">
-        <div class="index item">{{ i + 1 }}</div>
-        <div class="title item">{{data.title}}</div>
-        <div class="status item">{{data.status}}</div>
-    </mat-grid-tile>
-
-  </mat-grid-list>
-
+  <mat-grid-tile
+    *ngFor="let data of userservice.issue; index as i"
+    
+  >
+    <div class="index item">{{ i + 1 }}</div>
+    <div class="title item" (click)="issuedetails(data)">{{ data.title }}</div>
+    <div class="status item">{{ data.status }}</div>
+    <div class="item">
+       <button mat-button (click)="userservice.deleteissue(data.issue_id)"><mat-icon>delete</mat-icon></button> 
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+<iframe width="500" height="300" src="'./issueform.component.html'" ></iframe>
+<!-- <button >open i frame</button> -->

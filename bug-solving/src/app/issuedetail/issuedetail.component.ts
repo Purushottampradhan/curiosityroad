@@ -17,8 +17,9 @@ export class IssuedetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activatedroute.snapshot.params['id'];
-    console.log(this.id);
+    // console.log(this.id);
     this.userservice.getone(this.id);
+
   }
 
 }

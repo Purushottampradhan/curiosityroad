@@ -24,14 +24,27 @@ export class UserserviceService implements OnInit {
     name: '',
     discription: '',
   };
+  issuedetails = {
+    discription: '',
+    expectedresult: '',
+    replicate: '',
+    status: '',
+    title: '',
+    project_id: '',
+    user_id: '',
+  };
+  userdetails = {
+    name: '',
+    image: '',
+  };
   uuid: any;
   val: any;
   issue: any;
   currentuser: any;
   yourissue: any;
   yourproject: any;
-  //  yourprojectname:any
-  // yourprojectid: any;
+  oneissue: any;
+  selecteduser: any;
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -100,19 +113,42 @@ export class UserserviceService implements OnInit {
       .valueChanges()
       .subscribe(
         (data) => {
-          if(data){
-            
-
-          }
-          else{
-            console.log("data not found")
-            this.router.navigate(['/project'])
+          if (data) {
+            this.oneissue = data;
+            this.issuedetails.discription = this.oneissue.discription;
+            this.issuedetails.status = this.oneissue.status;
+            this.issuedetails.expectedresult = this.oneissue.expectedresult;
+            this.issuedetails.replicate = this.oneissue.replicate;
+            this.issuedetails.title = this.oneissue.title;
+            this.getproject(this.oneissue.project_id);
+            this.getuser(this.oneissue.user_id);
+          } else {
+            console.log('data not found');
+            this.router.navigate(['/project']);
           }
         },
         (err) => console.log(err)
       );
   }
-  //get one project
+  //get user details
+  getuser(id: any) {
+    this.firestore
+      .collection('users')
+      .doc(id)
+      .valueChanges()
+      .subscribe(
+        (data) => {
+          if(data){
+            this.selecteduser = data;
+            // console.log(this.selecteduser);
+            this.userdetails.name = this.selecteduser.username;
+            this.userdetails.image = this.selecteduser.image;
+          }
+        },
+        (err) => console.log(err)
+      );
+  }
+  //get one project details
   getproject(id: any) {
     this.firestore
       .collection('project')
@@ -127,7 +163,7 @@ export class UserserviceService implements OnInit {
           this.projectdetails.id = this.yourproject.project_id;
           this.projectdetails.name = this.yourproject.project_name;
           this.projectdetails.discription = this.yourproject.discription;
-          console.log(this.projectdetails);
+          // console.log(this.projectdetails);
         },
         (err) => console.log(err)
       );
@@ -147,7 +183,7 @@ export class UserserviceService implements OnInit {
       );
   }
 
-  //get project details
+  //get all project details
   project() {
     this.firestore
       .collection('project')
@@ -203,5 +239,19 @@ export class UserserviceService implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  deleteissue(id:any){
+    let r=confirm("do you want to delete")
+    if(r){
+      this.firestore.collection('issues').doc(id).delete().then(()=>{
+        console.log("issue deleted sucesfully ")
+      }).catch((error)=>{
+        console.log("error removing issue",error)
+      })
+    }
+    else{
+      console.log("you select cancle")
+    }
   }
 }

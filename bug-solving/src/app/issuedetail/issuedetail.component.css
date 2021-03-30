@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-
     height: auto;
     width: auto;
     clear: both;
@@ -10,7 +9,7 @@
 }
 .issuedetails{
     width: 800px;
-    height: 400px;
+    height: 450px;
     background-color:whitesmoke;
     overflow: scroll;
 }
@@ -19,5 +18,10 @@ mat-card{
     width: auto;
 }
 mat-grid-tile{
-    background-color: coral;
+    background-color: rgb(220, 202, 196);
+}
+.image{
+    height: 25px;
+    border-radius: 30px;
+    margin: 5px;
 }
