@@ -5,21 +5,32 @@ import { UserserviceService } from '../userservice.service';
 @Component({
   selector: 'app-projectdetails',
   templateUrl: './projectdetails.component.html',
-  styleUrls: ['./projectdetails.component.css']
+  styleUrls: ['./projectdetails.component.css'],
 })
 export class ProjectdetailsComponent implements OnInit {
-id:any;
-  constructor(public userservice:UserserviceService,
-    private activatedroute:ActivatedRoute,
-    private router:Router) { }
+  id: any;
+  projectdetails: any;
+  constructor(
+    public userservice: UserserviceService,
+    private activatedroute: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-this.id=this.activatedroute.snapshot.params['id']
-this.userservice.getproject(this.id)
+    this.id = this.activatedroute.snapshot.params['id'];
+    this.userservice.getproject(this.id).then(
+      (value) => {
+        // console.log(value);
+        this.projectdetails = value;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   //get issue details
-  issuedetails(data:any){
+  issuedetails(data: any) {
     // console.log(data)
-    this.router.navigate([`/project/allissue/${data.issue_id}`])
+    this.router.navigate([`/project/allissue/${data.issue_id}`]);
   }
 }

@@ -1,5 +1,5 @@
-<mat-grid-list cols="1" rowHeight="2:.1">
-  <mat-grid-tile
+<mat-card cols="1" rowHeight="2:.1">
+  <mat-card-content
     *ngFor="let data of userservice.issue; index as i"
     
   >
@@ -9,7 +9,6 @@
     <div class="item">
        <button mat-button (click)="userservice.deleteissue(data.issue_id)"><mat-icon>delete</mat-icon></button> 
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
-<iframe width="500" height="300" src="'./issueform.component.html'" ></iframe>
-<!-- <button >open i frame</button> -->
+  </mat-card-content>
+</mat-card>
+

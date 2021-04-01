@@ -7,6 +7,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { take, finalize } from 'rxjs/operators';
 import { UserserviceService } from '../userservice.service';
+// import{Moment} from 'moment'
+import * as moment from 'moment';
 @Component({
   selector: 'app-issueform',
   templateUrl: './issueform.component.html',
@@ -33,7 +35,11 @@ export class IssueformComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,
     public userservice: UserserviceService
-  ) {}
+  ) {
+    console.log(moment().format('YYYYMMDDhhmmss'))
+    console.log(moment('20210401104531','YYYYMMDDhhmmss').fromNow())
+    // console.log(moment().startOf('').fromNow())
+  }
 
   ngOnInit(): void {}
   onfileselected(event: any) {
@@ -84,7 +90,6 @@ export class IssueformComponent implements OnInit {
     if (this.images.length) {
       if (this.formtemplate.valid) {
         this.issue_id = uuidv4();
-
         const details = {
           title: formvalue.issue,
           discription: formvalue.discription,

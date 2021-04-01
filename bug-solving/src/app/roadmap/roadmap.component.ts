@@ -43,9 +43,4 @@ export class RoadmapComponent implements OnInit {
         console.log('document updated sucesfully');
       });
   }
-  iframe(){
-// this.iframeURL=this.router.navigate(['/product/issueform']);
-// this.iframeURL=this.senetizer.bypassSecurityTrustResourceUrl('/project/issueform')
-// this.iframeURL='/product/issueform'
-  }
 }

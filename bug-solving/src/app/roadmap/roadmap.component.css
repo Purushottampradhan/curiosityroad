@@ -1,11 +1,18 @@
-mat-grid-tile {
+mat-card-content{
   background:white;
-}
-mat-grid-list {
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: auto;
+  margin-bottom: 10px;
+  justify-content: space-evenly;
+  box-shadow: -5px 5px 5px rgb(150, 150, 231);
+}
+mat-card{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -18,4 +25,7 @@ mat-grid-list {
 .title{
     color: blue;
     cursor: pointer;
+}
+mat-card-content:hover{
+    box-shadow: -5px 5px 2px rgb(150, 150, 231);
 }

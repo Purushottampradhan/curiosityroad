@@ -5,8 +5,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { observable, Observable } from 'rxjs';
+import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
+import * as moment from 'moment'; //for date function
+
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
   providedIn: 'root',
@@ -19,32 +21,34 @@ export class UserserviceService implements OnInit {
     image: '',
     email: '',
   };
-  projectdetails = {
+  // projectdetails = {
+  //   id: '',
+  //   name: '',
+  //   discription: '',
+  // };
+  // issuedetails = {
+  //   discription: '',
+  //   expectedresult: '',
+  //   replicate: '',
+  //   status: '',
+  //   title: '',
+  //   project_id: '',
+  //   user_id: '',
+  // };
+  // userdetails = {
+  //   name: '',
+  //   image: '',
+  // };
+  uuid: any; //this is unique id for issue id
+  val: any; //details of the project
+  issue: any; //store all isssue list
+  currentuser: any; //store the current user logged in
+  historydetails = {
     id: '',
-    name: '',
-    discription: '',
-  };
-  issuedetails = {
-    discription: '',
-    expectedresult: '',
-    replicate: '',
-    status: '',
-    title: '',
-    project_id: '',
-    user_id: '',
-  };
-  userdetails = {
-    name: '',
-    image: '',
-  };
-  uuid: any;
-  val: any;
-  issue: any;
-  currentuser: any;
-  yourissue: any;
-  yourproject: any;
-  oneissue: any;
-  selecteduser: any;
+    data: '',
+    date: '',
+    issue_id: '',
+  }; //store the data of history
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -68,6 +72,37 @@ export class UserserviceService implements OnInit {
     );
   }
   ngOnInit(): void {}
+
+  //history of issue
+  history(data: any) {
+    this.firestore
+      .collection('history')
+      .doc(this.historydetails.id)
+      .set(data)
+      .then(() => {
+        // this.userlogin(data.user_id);
+        alert('history sucessfully added');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  //get history of issue
+  gethistory() {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('history')
+        .valueChanges()
+        .subscribe((data) => {
+          if (data) {
+            resolve(data);
+          } else {
+            reject('No history');
+          }
+        });
+    });
+  }
 
   //user login
   onlogin() {
@@ -104,69 +139,112 @@ export class UserserviceService implements OnInit {
       .catch((error: any) => {
         console.log(error);
       });
+    // console.log("user created")
   }
+
   //get one issue from selected list
   getone(id: any) {
-    this.firestore
-      .collection('issues')
-      .doc(id)
-      .valueChanges()
-      .subscribe(
-        (data) => {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('issues')
+        .doc(id)
+        .valueChanges()
+        .subscribe((data) => {
           if (data) {
-            this.oneissue = data;
-            this.issuedetails.discription = this.oneissue.discription;
-            this.issuedetails.status = this.oneissue.status;
-            this.issuedetails.expectedresult = this.oneissue.expectedresult;
-            this.issuedetails.replicate = this.oneissue.replicate;
-            this.issuedetails.title = this.oneissue.title;
-            this.getproject(this.oneissue.project_id);
-            this.getuser(this.oneissue.user_id);
+            resolve(data);
           } else {
-            console.log('data not found');
-            this.router.navigate(['/project']);
+            reject('no issue found');
           }
-        },
-        (err) => console.log(err)
-      );
+        });
+    });
+
+    // this.firestore
+    //   .collection('issues')
+    //   .doc(id)
+    //   .valueChanges()
+    //   .subscribe(
+    //     (data) => {
+    //       if (data) {
+    //         this.oneissue = data;
+    //         this.issuedetails.discription = this.oneissue.discription;
+    //         this.issuedetails.status = this.oneissue.status;
+    //         this.issuedetails.expectedresult = this.oneissue.expectedresult;
+    //         this.issuedetails.replicate = this.oneissue.replicate;
+    //         this.issuedetails.title = this.oneissue.title;
+    //         this.getproject(this.oneissue.project_id);
+    //         this.getuser(this.oneissue.user_id);
+    //       } else {
+    //         console.log('data not found');
+    //         this.router.navigate(['/project']);
+    //       }
+    //     },
+    //     (err) => console.log(err)
+    //   );
   }
   //get user details
   getuser(id: any) {
-    this.firestore
-      .collection('users')
-      .doc(id)
-      .valueChanges()
-      .subscribe(
-        (data) => {
-          if(data){
-            this.selecteduser = data;
-            // console.log(this.selecteduser);
-            this.userdetails.name = this.selecteduser.username;
-            this.userdetails.image = this.selecteduser.image;
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('users')
+        .doc(id)
+        .valueChanges()
+        .subscribe((data) => {
+          if (data) {
+            resolve(data);
+          } else {
+            reject('no user data found');
           }
-        },
-        (err) => console.log(err)
-      );
+        });
+    });
+    // this.firestore
+    //   .collection('users')
+    //   .doc(id)
+    //   .valueChanges()
+    //   .subscribe(
+    //     (data) => {
+    //       if (data) {
+    //         this.selecteduser = data;
+    //         // console.log(this.selecteduser);
+    //         this.userdetails.name = this.selecteduser.username;
+    //         this.userdetails.image = this.selecteduser.image;
+    //       }
+    //     },
+    //     (err) => console.log(err)
+    //   );
   }
   //get one project details
+
   getproject(id: any) {
-    this.firestore
-      .collection('project')
-      .doc(id)
-      .valueChanges()
-      .subscribe(
-        (data) => {
-          // console.log(data);
-          this.yourproject = data;
-          // this.yourprojectname=this.yourproject.project_name;
-          // this.yourprojectid=this.yourproject.project_id;
-          this.projectdetails.id = this.yourproject.project_id;
-          this.projectdetails.name = this.yourproject.project_name;
-          this.projectdetails.discription = this.yourproject.discription;
-          // console.log(this.projectdetails);
-        },
-        (err) => console.log(err)
-      );
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('project')
+        .doc(id)
+        .valueChanges()
+        .subscribe((data) => {
+          if (data) {
+            resolve(data);
+          } else {
+            reject('no project data found');
+          }
+        });
+    });
+    // this.firestore
+    //   .collection('project')
+    //   .doc(id)
+    //   .valueChanges()
+    //   .subscribe(
+    //     (data) => {
+    //       // console.log(data);
+    //       this.yourproject = data;
+    //       // this.yourprojectname=this.yourproject.project_name;
+    //       // this.yourprojectid=this.yourproject.project_id;
+    //       this.projectdetails.id = this.yourproject.project_id;
+    //       this.projectdetails.name = this.yourproject.project_name;
+    //       this.projectdetails.discription = this.yourproject.discription;
+    //       // console.log(this.projectdetails);
+    //     },
+    //     (err) => console.log(err)
+    //   );
   }
   //get issue list
   issuelist() {
@@ -200,12 +278,17 @@ export class UserserviceService implements OnInit {
 
   //submit the issue form
   onsubmit(data: any) {
+    this.historydetails.id = uuidv4();
     this.firestore
       .collection('issues')
       .doc(data.issue_id)
       .set(data)
-      .then(() => {
+      .then(async () => {
         // this.userlogin(data.user_id);
+        this.historydetails.issue_id = data.issue_id;
+        this.historydetails.data = 'issue created';
+        this.historydetails.date = moment().format('YYYYMMDDhhmmss');
+        await this.history(this.historydetails);
         alert('document sucessfully added');
       })
       .catch((error) => {
@@ -241,17 +324,21 @@ export class UserserviceService implements OnInit {
       });
   }
 
-  deleteissue(id:any){
-    let r=confirm("do you want to delete")
-    if(r){
-      this.firestore.collection('issues').doc(id).delete().then(()=>{
-        console.log("issue deleted sucesfully ")
-      }).catch((error)=>{
-        console.log("error removing issue",error)
-      })
-    }
-    else{
-      console.log("you select cancle")
+  deleteissue(id: any) {
+    let r = confirm('do you want to delete');
+    if (r) {
+      this.firestore
+        .collection('issues')
+        .doc(id)
+        .delete()
+        .then(() => {
+          console.log('issue deleted sucesfully ');
+        })
+        .catch((error) => {
+          console.log('error removing issue', error);
+        });
+    } else {
+      console.log('you select cancle');
     }
   }
 }

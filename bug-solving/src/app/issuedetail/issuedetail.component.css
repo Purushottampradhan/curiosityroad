@@ -1,27 +1,53 @@
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    height: auto;
-    width: auto;
-    clear: both;
-    justify-content: center;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: auto;
+  width: auto;
+  justify-content: center;
 }
-.issuedetails{
-    width: 800px;
-    height: 450px;
-    background-color:whitesmoke;
-    overflow: scroll;
+.issuedetails {
+  width: 50%;
+  height: 100vh;
+  background-color: whitesmoke;
+  overflow: scroll;
 }
-mat-card{
-    text-align: center;
-    width: auto;
+mat-card {
+  text-align: left;
+  width: auto;
+  height: auto;
 }
-mat-grid-tile{
-    background-color: rgb(220, 202, 196);
+
+.image {
+  height: 25px;
+  border-radius: 30px;
+  margin: 5px;
 }
-.image{
-    height: 25px;
-    border-radius: 30px;
-    margin: 5px;
+.projectdetails {
+  width: 50%;
+  height: 100vh;
+  background-color: whitesmoke;
+  /* overflow: scroll; */
 }
+.activity {
+  text-align: left;
+  justify-content: left;
+  height: 100vh;
+  background-color: rgb(243, 242, 242);
+}
+mat-card-actions {
+  text-align: left;
+  justify-content: left;
+}
+mat-select{
+    width: 60px;
+    
+}
+mat-form-field{
+    width: 70px;
+}
+td{
+    margin: 10px;
+    padding: 20px;
+}
+

@@ -3,14 +3,26 @@ mat-card{
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     display: inline-block;
     width: 30%;
-    height: 100px;
+    height: auto;
     cursor: pointer;
+    overflow: visible;  
 }
 mat-card-title{
 
     text-align: center;
     /* align-items: center; */
+    /* text-shadow: 1px 1px 2px  rgb(72, 67, 218); */
+}
+.contanir{
+height: 300px;
+width: 100vw;
+display: flex;
+flex-wrap: wrap;
+/* overflow: scroll; */
+}
+.card{
+    box-shadow: -5px 5px  5px rgb(101, 116, 230);
 }

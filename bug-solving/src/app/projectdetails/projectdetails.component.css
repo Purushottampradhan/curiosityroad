@@ -9,10 +9,14 @@
 .projectdetails{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     display: inline-block;
-    justify-content: left;
+    /* text-align: left;
+    justify-content: left; */
     /* height: 200px; */
     /* overflow: scroll; */
+    box-shadow: -5px 5px 5px rgb(164, 177, 225);
+
 }
 mat-card{
     height: auto;
@@ -24,6 +28,7 @@ mat-card{
     width: auto;
 
 }
+
 mat-card-actions{
     display: flex;
     flex-direction:row;
@@ -35,11 +40,13 @@ mat-card-actions{
     /* height: 200px; */
 }
 .oneissue{
-    background-color: rgb(225, 231, 231);
+    background-color: rgb(180, 187, 235);
     margin: 5px;
     padding: 10px;
+    border-radius: 5px;
 }
 .issuelist{
     height: 300px;
     overflow: scroll;
+    box-shadow: -5px 5px 5px rgb(153, 168, 220);
 }

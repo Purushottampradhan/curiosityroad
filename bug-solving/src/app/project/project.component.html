@@ -1,7 +1,13 @@
-<mat-card *ngFor="let data of userservice.val" (click)="openSnackBar(data.project_name,'Clicked') "(click)="projectdetails(data)" >
-    <mat-card-title>
-        <span>{{data.project_name}}</span>
-    </mat-card-title>
-</mat-card>
+<div class="contanir">  
+    <mat-card class="card" *ngFor="let data of userservice.val" (click)="openSnackBar(data.project_name,'Clicked') "(click)="projectdetails(data)" >
+        <mat-card-title>
+            <span>{{data.project_name}}</span>
+        </mat-card-title>
+        <span>Quick Link</span>
+        <mat-card-actions>
+            <button mat-button (click)="projectdetails(data)">Project Details</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
 <!-- <iframe src="/issueform" height="500px" width="600px"></iframe> -->
 

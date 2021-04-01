@@ -1,23 +1,86 @@
-
+<!-- <p>{{issue?.title}}</p> -->
 <div class="container">
+  <div class="projectdetails">
+    <mat-card>
+      <mat-card-title
+        >Project Name:- {{ projectdetail?.project_name }}</mat-card-title
+      >
+      <mat-card-subtitle>Issue:-{{ issue?.title }}</mat-card-subtitle>
+    </mat-card>
+    <mat-card>
+      <mat-card-actions>
+        <button mat-button><mat-icon>attachment</mat-icon>Attach</button>
+        <button mat-button><mat-icon>task</mat-icon>Subtask</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Activity</mat-card-title>
+      <mat-card-actions>
+        Show:<button mat-button><mat-icon>comment</mat-icon>Comment</button>
+        <button mat-button><mat-icon>history</mat-icon>History</button>
+        <button mat-button><mat-icon>worklog</mat-icon>Work Log</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card>
+      <mat-card-content class="activity">
+        this is activity block
+        <div *ngFor="let history of allhistory">
+          <div *ngIf="history.issue_id==issue.issue_id">
+            {{ history.data }}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <div class="issuedetails">
-     <mat-card>
-        <mat-card-title> {{userservice.projectdetails.name}}</mat-card-title>
-        <mat-card-content>{{userservice.projectdetails.discription}}</mat-card-content>
-      </mat-card>
-      <mat-grid-list cols="2" rowHeight="7:1">
-        <mat-grid-tile>Issue Name</mat-grid-tile>
-        <mat-grid-tile>{{userservice.issuedetails.title}}</mat-grid-tile>
-        <mat-grid-tile>Discription</mat-grid-tile>
-        <mat-grid-tile>{{userservice.issuedetails.discription}}</mat-grid-tile>
-        <mat-grid-tile>replicate</mat-grid-tile>
-        <mat-grid-tile>{{userservice.issuedetails.replicate}}</mat-grid-tile>
-        <mat-grid-tile>Expected Result</mat-grid-tile>
-        <mat-grid-tile>{{userservice.issuedetails.expectedresult}}</mat-grid-tile>
-        <mat-grid-tile>Status</mat-grid-tile>
-        <mat-grid-tile>{{userservice.issuedetails.status}}</mat-grid-tile>
-        <mat-grid-tile>Created By</mat-grid-tile>
-        <mat-grid-tile><img class="image" src="{{userservice.userdetails.image}}">{{userservice.userdetails.name}}</mat-grid-tile>
-      </mat-grid-list>
+    <mat-card>
+      <mat-form-field>
+        <mat-label>To Do</mat-label>
+        <mat-select>
+          <mat-option>Clear</mat-option>
+          <mat-option value="progress">IN PROGRESS</mat-option>
+          <mat-option value="review">IN REVIEW</mat-option>
+          <mat-option value="done">DONE</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+    <mat-card>
+      <table mat-table>
+        <th></th>
+        <th></th>
+        <tr>
+          <td>Assignee</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Created By</td>
+          <td>
+            <img class="image" src="{{ userdetails?.image }}" />{{
+              userdetails?.username
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Issue Name</td>
+          <td>{{ issue?.title }}</td>
+        </tr>
+        <tr>
+          <td>Discription</td>
+          <td>{{ issue?.discription }}</td>
+        </tr>
+        <tr>
+          <td>step to replicate</td>
+          <td>{{ issue?.replicate }}</td>
+        </tr>
+        <tr>
+          <td>Expected Result</td>
+          <td>{{ issue?.expectedresult }}</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>{{ issue?.status }}</td>
+        </tr>
+      </table>
+    </mat-card>
   </div>
 </div>
