@@ -9,7 +9,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
 import { IssueformComponent } from './issueform/issueform.component';
 
@@ -24,7 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import {MatCardModule} from "@angular/material/card"
 import {MatSnackBarModule} from "@angular/material/snack-bar"
 import {MatGridListModule} from '@angular/material/grid-list'
-// import{} from "@angular/material/"
+import{MatTabsModule} from "@angular/material/tabs"
 //angular mateial end
 
 //bootstrap
@@ -77,6 +77,7 @@ import { HighlightDirective } from './highlight.directive';
     MatCardModule,
     MatSnackBarModule,
     MatGridListModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

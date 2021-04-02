@@ -14,25 +14,53 @@
     </mat-card>
     <mat-card>
       <mat-card-title>Activity</mat-card-title>
-      <mat-card-actions>
+      <!-- <mat-card-actions>
         Show:<button mat-button><mat-icon>comment</mat-icon>Comment</button>
-        <button mat-button><mat-icon>history</mat-icon>History</button>
+        <button mat-button (click)="history()"><mat-icon>history</mat-icon>History</button>
         <button mat-button><mat-icon>worklog</mat-icon>Work Log</button>
-      </mat-card-actions>
-      <mat-card-content class="activity" >
-        <!-- this is activity block -->
-        <div *ngFor="let history of allhistory">
-          <div *ngIf="history.issue_id == issue.issue_id" class="history">
-            <img class="image" src="{{ userdetails?.image }}" />
-            <div class="historydata" >
-              {{ userdetails?.username }} &nbsp;
-              <b> {{ history?.data }} &nbsp; </b>
-              <!-- {{history.date}} -->
-              {{ moment(history.date, "YYYYMMDDHHmmss").fromNow() }}
+      </mat-card-actions> -->
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab>
+          <ng-template mat-tab-label class="tab">
+            <mat-icon class="example-tab-icon">comment</mat-icon>
+            Comment
+          </ng-template>
+          <mat-card-content class="activity">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>Comment</mat-label>
+                <input type="email" matInput (focus)="onfocus()" >
+              </mat-form-field>
+              <div class="comment-btn">
+                <button mat-button [hidden]='visible'>Save</button>
+                <button mat-button [hidden]='visible'>Cancle</button>
+              </div>
+              </form>
+          </mat-card-content>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">history</mat-icon>
+            History
+          </ng-template>
+          <mat-card-content class="activity">
+            <!-- this is activity block -->
+            <div *ngFor="let history of allhistory">
+              <div *ngFor="let user of userdetails">
+                <div *ngIf="history?.user_id == user?.user_id" class="history">
+                  <img class="image" src="{{ user?.image }}" />
+                  <div class="historydata">
+                    {{ user?.username }} &nbsp;
+                    <b> {{ history?.data }} &nbsp; </b>
+                    <!-- {{history.date}} -->
+                    {{ moment(history.date, "YYYYMMDDHHmmss").fromNow() }}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </mat-card-content>
+          </mat-card-content>
+        </mat-tab>
+      </mat-tab-group>
     </mat-card>
   </div>
   <div class="issuedetails">
@@ -58,11 +86,11 @@
         </tr>
         <tr>
           <td>Created By</td>
-          <td>
-            <img class="image" src="{{ userdetails?.image }}" />{{
-              userdetails?.username
-            }}
-          </td>
+          <div *ngFor="let user of userdetails">
+            <td *ngIf="user?.user_id == issue?.user_id">
+              <img class="image" src="{{ user?.image }}" />{{ user?.username }}
+            </td>
+          </div>
         </tr>
         <tr>
           <td>Issue Name</td>

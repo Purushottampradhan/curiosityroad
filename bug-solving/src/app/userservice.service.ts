@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import * as moment from 'moment'; //for date function
+import { idText } from 'typescript';
 
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
@@ -48,6 +49,7 @@ export class UserserviceService implements OnInit {
     data: '',
     date: '',
     issue_id: '',
+    user_id: '',
   }; //store the data of history
   constructor(
     private afAuth: AngularFireAuth,
@@ -74,13 +76,16 @@ export class UserserviceService implements OnInit {
   ngOnInit(): void {}
 
   //history of issue
-  history(data: any) {
+  history(issue_id: any, data: any) {
     this.historydetails.id = uuidv4();
-    this.historydetails.date = moment().format('YYYYMMDDHHmmss');
+    this.historydetails.user_id = this.user.user_id;
+    this.historydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
     this.firestore
       .collection('history')
+      .doc(issue_id)
+      .collection('historydetails')
       .doc(this.historydetails.id)
-      .set(data)
+      .set(this.historydetails)
       .then(() => {
         // this.userlogin(data.user_id);
         // alert('history sucessfully added');
@@ -91,16 +96,19 @@ export class UserserviceService implements OnInit {
   }
 
   //get history of issue
-  gethistory() {
+  gethistory(issue_id: any) {
+    // console.log(issue_id)
     return new Promise((resolve, reject) => {
       this.firestore
         .collection('history')
+        .doc(issue_id)
+        .collection('historydetails')
         .valueChanges()
         .subscribe((data) => {
           if (data) {
             resolve(data);
           } else {
-            reject('No history');
+            reject('error geting history');
           }
         });
     });
@@ -183,12 +191,11 @@ export class UserserviceService implements OnInit {
     //     (err) => console.log(err)
     //   );
   }
-  //get user details
-  getuser(id: any) {
+  //get one user details
+  getuser() {
     return new Promise((resolve, reject) => {
       this.firestore
         .collection('users')
-        .doc(id)
         .valueChanges()
         .subscribe((data) => {
           if (data) {
@@ -284,12 +291,13 @@ export class UserserviceService implements OnInit {
       .collection('issues')
       .doc(data.issue_id)
       .set(data)
-      .then( () => {
+      .then(() => {
         // this.userlogin(data.user_id);
         this.historydetails.issue_id = data.issue_id;
         this.historydetails.data = 'issue created';
+
         // console.log(moment().format('YYYYMMDDHHmmss'))
-       this.history(this.historydetails);
+        this.history(data.issue_id, this.historydetails);
         alert('document sucessfully added');
       })
       .catch((error) => {

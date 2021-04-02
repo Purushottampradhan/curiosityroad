@@ -14,11 +14,13 @@ export class IssuedetailComponent implements OnInit {
   issue: any;
   projectdetail: any;
   userdetails: any;
+  historydetails: any;
   // title:any;
+  user: string | undefined;
   allhistory: any;
   time: any;
   moment: any = moment;
-  
+  visible=false;
   constructor(
     private activatedroute: ActivatedRoute,
     private firestore: AngularFirestore,
@@ -32,7 +34,7 @@ export class IssuedetailComponent implements OnInit {
         // console.log(value);
         this.issue = value;
         //get project details of selected issue
-        await this.userservice.getproject(this.issue?.project_id).then(
+        await this.userservice.getproject(this.issue.project_id).then(
           (value) => {
             this.projectdetail = value;
           },
@@ -40,26 +42,28 @@ export class IssuedetailComponent implements OnInit {
             console.log(error);
           }
         );
-        //get  user details that create this issue
-        await this.userservice.getuser(this.issue?.user_id).then(
+        //get  all user details
+        await this.userservice.getuser().then(
           (value) => {
             this.userdetails = value;
+            // console.log(this.userdetails)
           },
           (error) => {
             console.log(error);
           }
         );
+        await this.userservice.gethistory(this.issue?.issue_id).then(
+          (value) => {
+            this.allhistory = value;
+            // console.log(this.allhistory);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
         // console.log(this.projectdetail);
         // console.log(this.issue.title);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.userservice.gethistory().then(
-      (value) => {
-        this.allhistory = value;
-        // console.log(this.allhistory);
       },
       (error) => {
         console.log(error);
@@ -74,10 +78,20 @@ export class IssuedetailComponent implements OnInit {
         status: newstatus,
       })
       .then(async () => {
-        this.userservice.historydetails.data="status changed";
-        this.userservice.historydetails.issue_id=this.issue.issue_id;
-       this.userservice.history(this.userservice.historydetails)
+        this.userservice.historydetails.data = `status changed to ${newstatus}`;
+        this.userservice.historydetails.issue_id = this.issue.issue_id;
+        this.userservice.history(
+          this.issue.issue_id,
+          this.userservice.historydetails
+        );
         console.log('document updated sucesfully');
       });
+  }
+  history(){
+    document.getElementById
+  }
+  onfocus(){
+    console.log('hello')
+    // this.visible=;
   }
 }

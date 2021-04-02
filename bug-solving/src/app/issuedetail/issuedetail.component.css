@@ -69,3 +69,10 @@ td{
 .historydata{
   margin-top: 8px;
 }
+.mat-tab-label{
+  /* width:100px; */
+  min-width: 100px;
+}
+.example-full-width{
+  width: 300px;
+  }
