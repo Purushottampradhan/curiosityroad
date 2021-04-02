@@ -2,18 +2,23 @@ import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { UserserviceService } from '../userservice.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-issuedetail',
   templateUrl: './issuedetail.component.html',
   styleUrls: ['./issuedetail.component.css'],
 })
 export class IssuedetailComponent implements OnInit {
+  selected: string | undefined;
   id: any;
   issue: any;
   projectdetail: any;
   userdetails: any;
   // title:any;
   allhistory: any;
+  time: any;
+  moment: any = moment;
+  
   constructor(
     private activatedroute: ActivatedRoute,
     private firestore: AngularFirestore,
@@ -54,11 +59,25 @@ export class IssuedetailComponent implements OnInit {
     this.userservice.gethistory().then(
       (value) => {
         this.allhistory = value;
-        console.log(this.allhistory);
+        // console.log(this.allhistory);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+  update(newstatus: any) {
+    this.firestore
+      .collection('issues')
+      .doc(this.issue?.issue_id)
+      .update({
+        status: newstatus,
+      })
+      .then(async () => {
+        this.userservice.historydetails.data="status changed";
+        this.userservice.historydetails.issue_id=this.issue.issue_id;
+       this.userservice.history(this.userservice.historydetails)
+        console.log('document updated sucesfully');
+      });
   }
 }

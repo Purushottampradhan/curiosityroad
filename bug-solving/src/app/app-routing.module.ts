@@ -34,6 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'allissue/:id',
+        canActivate:[AuthguardGuard],
         component: IssuedetailComponent,
       },
     ],

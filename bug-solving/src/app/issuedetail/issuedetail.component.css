@@ -8,14 +8,15 @@
 }
 .issuedetails {
   width: 50%;
-  height: 100vh;
+  height: 600px;
   background-color: whitesmoke;
-  overflow: scroll;
+  overflow: auto;
 }
 mat-card {
   text-align: left;
   width: auto;
   height: auto;
+  background-color: white;
 }
 
 .image {
@@ -25,29 +26,46 @@ mat-card {
 }
 .projectdetails {
   width: 50%;
-  height: 100vh;
+  height: 600px;
   background-color: whitesmoke;
-  /* overflow: scroll; */
+  overflow:auto
 }
 .activity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
   justify-content: left;
-  height: 100vh;
+  height: 40vh;
   background-color: rgb(243, 242, 242);
+  overflow:auto;
 }
 mat-card-actions {
   text-align: left;
   justify-content: left;
 }
-mat-select{
+/* mat-select{
     width: 60px;
     
-}
-mat-form-field{
+} */
+/* mat-form-field{
     width: 70px;
-}
+} */
 td{
     margin: 10px;
     padding: 20px;
 }
-
+.history{
+  /* background-color: rgb(224, 224, 245); */
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  /* padding-top: 10px; */
+  /* justify-content:space-around */
+/* padding-top: 10px; */
+}
+.historydata{
+  margin-top: 8px;
+}

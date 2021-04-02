@@ -38,6 +38,8 @@ import { RoadmapComponent } from './roadmap/roadmap.component';
 import { IssuedetailComponent } from './issuedetail/issuedetail.component';
 import { CommonModule } from '@angular/common';
 import { ProjectdetailsComponent } from './projectdetails/projectdetails.component';
+import { FilterPipe } from './filter.pipe';
+import { HighlightDirective } from './highlight.directive';
 //form end
 
 @NgModule({
@@ -52,6 +54,8 @@ import { ProjectdetailsComponent } from './projectdetails/projectdetails.compone
     RoadmapComponent,
     IssuedetailComponent,
     ProjectdetailsComponent,
+    FilterPipe,
+    HighlightDirective,
   ],
   imports: [
     BrowserModule,

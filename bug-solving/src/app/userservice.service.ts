@@ -75,13 +75,15 @@ export class UserserviceService implements OnInit {
 
   //history of issue
   history(data: any) {
+    this.historydetails.id = uuidv4();
+    this.historydetails.date = moment().format('YYYYMMDDHHmmss');
     this.firestore
       .collection('history')
       .doc(this.historydetails.id)
       .set(data)
       .then(() => {
         // this.userlogin(data.user_id);
-        alert('history sucessfully added');
+        // alert('history sucessfully added');
       })
       .catch((error) => {
         console.log(error);
@@ -278,17 +280,16 @@ export class UserserviceService implements OnInit {
 
   //submit the issue form
   onsubmit(data: any) {
-    this.historydetails.id = uuidv4();
     this.firestore
       .collection('issues')
       .doc(data.issue_id)
       .set(data)
-      .then(async () => {
+      .then( () => {
         // this.userlogin(data.user_id);
         this.historydetails.issue_id = data.issue_id;
         this.historydetails.data = 'issue created';
-        this.historydetails.date = moment().format('YYYYMMDDhhmmss');
-        await this.history(this.historydetails);
+        // console.log(moment().format('YYYYMMDDHHmmss'))
+       this.history(this.historydetails);
         alert('document sucessfully added');
       })
       .catch((error) => {
