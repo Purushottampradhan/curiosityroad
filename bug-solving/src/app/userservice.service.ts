@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import * as moment from 'moment'; //for date function
-import { idText } from 'typescript';
 
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
@@ -51,6 +50,13 @@ export class UserserviceService implements OnInit {
     issue_id: '',
     user_id: '',
   }; //store the data of history
+  commentdetails = {
+    id: '',
+    data: '',
+    date: '',
+    issue_id: '',
+    user_id: '',
+  };
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -59,10 +65,10 @@ export class UserserviceService implements OnInit {
     this.project();
     this.issuelist();
     this.afAuth.authState.subscribe(
-      (user) => {
+      async (user) => {
         if (user) {
           this.currentuser = user;
-          this.userlogin();
+          await this.userlogin();
           // console.log('AUTHSTATE USER', user.uid);
         } else {
           // console.log('AUTHSTATE USER EMPTY', user);
@@ -74,13 +80,49 @@ export class UserserviceService implements OnInit {
     );
   }
   ngOnInit(): void {}
+  //add comment
+  async comment() {
+    this.commentdetails.id = uuidv4();
+    this.commentdetails.user_id = this.user.user_id;
+    this.commentdetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
+    await this.firestore
+      .collection('comment')
+      .doc(this.commentdetails.issue_id)
+      .collection('comment')
+      .doc(uuidv4())
+      .set(this.commentdetails)
+      .then(() => {
+        console.log('comment added');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  //get comment
+  getcomment(id:any) {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('comment')
+        .doc(id)
+        .collection('comment')
+        .valueChanges()
+        .subscribe((data) => {
+          if (data) {
+            resolve(data);
+            // console.log(data);
+          } else {
+            reject('no comment found');
+          }
+        });
+    });
+  }
 
   //history of issue
-  history(issue_id: any, data: any) {
+  async history(issue_id: any) {
     this.historydetails.id = uuidv4();
     this.historydetails.user_id = this.user.user_id;
     this.historydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
-    this.firestore
+    await this.firestore
       .collection('history')
       .doc(issue_id)
       .collection('historydetails')
@@ -93,6 +135,7 @@ export class UserserviceService implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+    // console.log('after added history');
   }
 
   //get history of issue
@@ -133,13 +176,12 @@ export class UserserviceService implements OnInit {
   }
 
   //user login details store
-  userlogin() {
+  async userlogin() {
     this.user.user_id = this.currentuser.uid;
     this.user.username = this.currentuser.displayName;
     this.user.image = this.currentuser.photoURL;
     this.user.email = this.currentuser.email;
-
-    this.firestore
+    await this.firestore
       .collection('users')
       .doc(this.currentuser.uid)
       .set(this.user)
@@ -149,7 +191,7 @@ export class UserserviceService implements OnInit {
       .catch((error: any) => {
         console.log(error);
       });
-    // console.log("user created")
+    // console.log('user created');
   }
 
   //get one issue from selected list
@@ -286,18 +328,18 @@ export class UserserviceService implements OnInit {
   }
 
   //submit the issue form
-  onsubmit(data: any) {
-    this.firestore
+  async onsubmit(data: any) {
+    await this.firestore
       .collection('issues')
       .doc(data.issue_id)
       .set(data)
-      .then(() => {
+      .then(async () => {
         // this.userlogin(data.user_id);
         this.historydetails.issue_id = data.issue_id;
         this.historydetails.data = 'issue created';
 
         // console.log(moment().format('YYYYMMDDHHmmss'))
-        this.history(data.issue_id, this.historydetails);
+        await this.history(data.issue_id);
         alert('document sucessfully added');
       })
       .catch((error) => {
@@ -319,9 +361,9 @@ export class UserserviceService implements OnInit {
       });
   }
   //create new project
-  createproject(data: any) {
+  async createproject(data: any) {
     console.log(data);
-    this.firestore
+    await this.firestore
       .collection('project')
       .doc(data.project_id)
       .set(data)
@@ -333,10 +375,10 @@ export class UserserviceService implements OnInit {
       });
   }
 
-  deleteissue(id: any) {
+  async deleteissue(id: any) {
     let r = confirm('do you want to delete');
     if (r) {
-      this.firestore
+      await this.firestore
         .collection('issues')
         .doc(id)
         .delete()

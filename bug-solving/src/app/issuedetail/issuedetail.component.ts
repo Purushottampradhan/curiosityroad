@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { UserserviceService } from '../userservice.service';
 import * as moment from 'moment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-issuedetail',
   templateUrl: './issuedetail.component.html',
@@ -15,12 +16,15 @@ export class IssuedetailComponent implements OnInit {
   projectdetail: any;
   userdetails: any;
   historydetails: any;
-  // title:any;
   user: string | undefined;
   allhistory: any;
   time: any;
   moment: any = moment;
-  visible=false;
+  visible = true;
+  commentform = new FormGroup({
+    comment: new FormControl(''),
+  });
+  comment: any;
   constructor(
     private activatedroute: ActivatedRoute,
     private firestore: AngularFirestore,
@@ -61,6 +65,15 @@ export class IssuedetailComponent implements OnInit {
             console.log(error);
           }
         );
+        this.userservice.getcomment(this.issue?.issue_id).then(
+          (value) => {
+            this.comment = value;
+            // console.log(value);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
 
         // console.log(this.projectdetail);
         // console.log(this.issue.title);
@@ -70,8 +83,8 @@ export class IssuedetailComponent implements OnInit {
       }
     );
   }
-  update(newstatus: any) {
-    this.firestore
+  async update(newstatus: any) {
+     await this.firestore
       .collection('issues')
       .doc(this.issue?.issue_id)
       .update({
@@ -80,18 +93,22 @@ export class IssuedetailComponent implements OnInit {
       .then(async () => {
         this.userservice.historydetails.data = `status changed to ${newstatus}`;
         this.userservice.historydetails.issue_id = this.issue.issue_id;
-        this.userservice.history(
-          this.issue.issue_id,
-          this.userservice.historydetails
-        );
+        await this.userservice.history(this.issue.issue_id);
         console.log('document updated sucesfully');
       });
   }
-  history(){
-    document.getElementById
+  onfocus() {
+    this.visible = false;
   }
-  onfocus(){
-    console.log('hello')
-    // this.visible=;
+  submitcomment(data: any) {
+    this.userservice.commentdetails.issue_id = this.issue?.issue_id;
+    this.userservice.commentdetails.data = data.comment;
+    this.userservice.comment();
+    this.visible=true;
+    this.commentform.reset();
+  }
+  resetcomment() {
+    this.visible = true;
+    this.commentform.reset();
   }
 }

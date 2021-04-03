@@ -1,24 +1,27 @@
 <div class="container">
-  <mat-card class="projectdetails" id="userservice.projectdetails.id">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Project Name:-{{projectdetails?.project_name }}</mat-card-title>
-      <mat-card-subtitle>Discription:-{{
-        projectdetails?.discription
-      }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions >
-        <mat-icon>add_circle_outline</mat-icon>
-        <a routerLink="/project/issueform">create issue</a>
-    </mat-card-actions>
-  </mat-card>
-  <mat-card class="issuelist" >
-    <mat-card-title> issue list </mat-card-title>
-    <mat-card-content *ngFor="let data of userservice.issue">
-        <div class="oneissue" *ngIf="data.project_id == projectdetails?.project_id" >
-         <button mat-button (click)="issuedetails(data)"> {{ data.title }}</button>
-         <button mat-button (click)="userservice.deleteissue(data.issue_id)"><mat-icon>delete</mat-icon></button> 
-        </div>
-    </mat-card-content>
-  </mat-card>
+    <mat-card class="projectdetails" id="userservice.projectdetails.id">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>Project Name:-{{ projectdetails?.project_name }}</mat-card-title>
+            <mat-card-subtitle>Discription:-{{ projectdetails?.discription }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+            <mat-icon>add_circle_outline</mat-icon>
+            <a routerLink="/project/issueform">create issue</a>
+        </mat-card-actions>
+    </mat-card>
+    <mat-card class="issuelist">
+        <mat-card-title> issue list </mat-card-title>
+        <mat-card-content *ngFor="let data of userservice.issue">
+            <div class="oneissue" *ngIf="data.project_id == projectdetails?.project_id">
+                <button mat-button (click)="issuedetails(data)">
+                    {{ data.title }}
+                </button>
+                <button mat-button (click)="userservice.deleteissue(data.issue_id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

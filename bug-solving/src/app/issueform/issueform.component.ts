@@ -36,8 +36,8 @@ export class IssueformComponent implements OnInit {
     private storage: AngularFireStorage,
     public userservice: UserserviceService
   ) {
-    console.log(moment().format('YYYYMMDDhhmmss'))
-    console.log(moment('20210401104531','YYYYMMDDhhmmss').fromNow())
+    // console.log(moment().format('YYYYMMDDhhmmss'))
+    // console.log(moment('20210401104531','YYYYMMDDhhmmss').fromNow())
     // console.log(moment().startOf('').fromNow())
   }
 

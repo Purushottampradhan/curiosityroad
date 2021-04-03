@@ -6,12 +6,14 @@
   width: auto;
   justify-content: center;
 }
+
 .issuedetails {
   width: 50%;
   height: 600px;
   background-color: whitesmoke;
   overflow: auto;
 }
+
 mat-card {
   text-align: left;
   width: auto;
@@ -24,12 +26,14 @@ mat-card {
   border-radius: 30px;
   margin: 5px;
 }
+
 .projectdetails {
   width: 50%;
   height: 600px;
   background-color: whitesmoke;
-  overflow:auto
+  overflow: auto;
 }
+
 .activity {
   display: flex;
   flex-direction: column;
@@ -38,24 +42,29 @@ mat-card {
   justify-content: left;
   height: 40vh;
   background-color: rgb(243, 242, 242);
-  overflow:auto;
+  overflow: auto;
 }
+
 mat-card-actions {
   text-align: left;
   justify-content: left;
 }
+
 /* mat-select{
     width: 60px;
     
 } */
+
 /* mat-form-field{
     width: 70px;
 } */
-td{
-    margin: 10px;
-    padding: 20px;
+
+td {
+  margin: 10px;
+  padding: 20px;
 }
-.history{
+
+.history {
   /* background-color: rgb(224, 224, 245); */
   height: auto;
   margin-top: 10px;
@@ -64,15 +73,47 @@ td{
   flex-wrap: wrap;
   /* padding-top: 10px; */
   /* justify-content:space-around */
-/* padding-top: 10px; */
+  /* padding-top: 10px; */
 }
-.historydata{
+
+.historydata {
   margin-top: 8px;
 }
-.mat-tab-label{
+
+.mat-tab-label {
   /* width:100px; */
   min-width: 100px;
 }
-.example-full-width{
-  width: 300px;
-  }
+
+.example-full-width {
+  width: 30em;
+}
+
+.comment-image {
+  width: 30px;
+  border-radius: 30px;
+  padding: 5px;
+}
+.comment-data-image {
+  width: 25px;
+  border-radius: 30px;
+  padding: 5px;
+}
+.comment-user {
+  font-size: 10px;
+  margin-top: 3px;
+}
+.user-comment-data {
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(231, 231, 228);
+    margin: 5px;
+    padding: 10px;
+}
+.icon mat-icon{
+    margin: 10px;
+}

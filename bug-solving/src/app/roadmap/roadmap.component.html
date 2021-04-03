@@ -1,15 +1,13 @@
 <mat-card cols="1" rowHeight="2:.1">
-  <input type="text" [(ngModel)]="searchText" autofocus placeholder="Search text">
-  <mat-card-content
-    *ngFor="let data of userservice.issue | filter:searchText; index as i" 
-    appHighlight [searchedWord]="searchText"  
-    [classToApply]="'font-weight-bold'" [setTitle]=true >  
-    <div class="index item">{{ i + 1 }}</div>
-    <div class="title item" (click)="issuedetails(data)">{{ data.title }}</div>
-    <div class="status item">{{ data.status }}</div>
-    <div class="item">
-       <button mat-button (click)="userservice.deleteissue(data.issue_id)"><mat-icon>delete</mat-icon></button> 
-    </div>
-  </mat-card-content>
+    <input type="text" [(ngModel)]="searchText" autofocus placeholder="Search text" />
+    <mat-card-content *ngFor="let data of userservice.issue | filter: searchText; index as i" appHighlight [searchedWord]="searchText" [classToApply]="'font-weight-bold'" [setTitle]="true">
+        <div class="index item">{{ i + 1 }}</div>
+        <div class="title item" (click)="issuedetails(data)">{{ data.title }}</div>
+        <div class="status item">{{ data.status }}</div>
+        <div class="item">
+            <button mat-button (click)="userservice.deleteissue(data.issue_id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+        </div>
+    </mat-card-content>
 </mat-card>
-

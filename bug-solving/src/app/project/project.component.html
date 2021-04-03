@@ -1,5 +1,6 @@
-<div class="contanir">  
-    <mat-card class="card" *ngFor="let data of userservice.val" (click)="openSnackBar(data.project_name,'Clicked') "(click)="projectdetails(data)" >
+<div class="contanir">
+    <mat-card class="card" *ngFor="let data of userservice.val" (click)="openSnackBar(data.project_name,'Clicked') "
+        (click)="projectdetails(data)">
         <mat-card-title>
             <span>{{data.project_name}}</span>
         </mat-card-title>
@@ -10,4 +11,3 @@
     </mat-card>
 </div>
 <!-- <iframe src="/issueform" height="500px" width="600px"></iframe> -->
-

@@ -1,18 +1,18 @@
 .form {
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: auto;
-  width: 500px;
-  /* justify-content: center; */
-  margin: 0 auto;
-  padding: 20px;
-  margin-top: 5px;
-  box-shadow: -5px 5px  5px rgb(128, 128, 238);
-  /* z-index: 22; */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: auto;
+    width: 500px;
+    /* justify-content: center; */
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 5px;
+    box-shadow: -5px 5px 5px rgb(128, 128, 238);
+    /* z-index: 22; */
 }
 
-button{
+button {
     margin: 10px;
 }

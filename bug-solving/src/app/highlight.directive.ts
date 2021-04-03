@@ -1,7 +1,14 @@
-import { Directive, Input, SimpleChanges, Renderer2, ElementRef, OnChanges } from '@angular/core';
+import {
+  Directive,
+  Input,
+  SimpleChanges,
+  Renderer2,
+  ElementRef,
+  OnChanges,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appHighlight]'
+  selector: '[appHighlight]',
 })
 export class HighlightDirective implements OnChanges {
   @Input()
@@ -15,7 +22,7 @@ export class HighlightDirective implements OnChanges {
 
   @Input() setTitle = false; //sets title attribute of HTML
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.content) {
@@ -23,15 +30,15 @@ export class HighlightDirective implements OnChanges {
     }
 
     if (this.setTitle) {
-      this.renderer.setProperty(
-        this.el.nativeElement,
-        'title',
-        this.content
-      );
+      this.renderer.setProperty(this.el.nativeElement, 'title', this.content);
     }
 
     if (!this.searchedWord || !this.searchedWord.length || !this.classToApply) {
-      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.content);
+      this.renderer.setProperty(
+        this.el.nativeElement,
+        'innerHTML',
+        this.content
+      );
       return;
     }
 
@@ -44,6 +51,9 @@ export class HighlightDirective implements OnChanges {
 
   getFormattedText() {
     const re = new RegExp(`(${this.searchedWord})`, 'gi');
-    return this.content.replace(re, `<span class="${this.classToApply}">$1</span>`);
+    return this.content.replace(
+      re,
+      `<span class="${this.classToApply}">$1</span>`
+    );
   }
 }

@@ -6,48 +6,46 @@
           </mat-form-field> -->
         <mat-form-field class="projectissue">
             <mat-label>Project issue</mat-label>
-            <input matInput type="text" formControlName="issue">
-          </mat-form-field>
+            <input matInput type="text" formControlName="issue" />
+        </mat-form-field>
 
-          <mat-form-field class="dicription" >
+        <mat-form-field class="dicription">
             <mat-label>Dscription</mat-label>
             <textarea matInput formControlName="discription"></textarea>
-          </mat-form-field>
-          <mat-form-field >
-            <mat-select  formControlName="category" placeholder="select project" >
-              <!-- <mat-option [value]="userservice.projectdetails.id" >{{userservice.projectdetails.name}}</mat-option> -->
-              <mat-option *ngFor="let data of userservice.val" [value]="data.project_id">{{data.project_name}}</mat-option>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select formControlName="category" placeholder="select project">
+                <!-- <mat-option [value]="userservice.projectdetails.id" >{{userservice.projectdetails.name}}</mat-option> -->
+                <mat-option *ngFor="let data of userservice.val" [value]="data.project_id">{{ data.project_name }}
+                </mat-option>
             </mat-select>
-          </mat-form-field>
-          <mat-form-field class="expectedresult" >
+        </mat-form-field>
+        <mat-form-field class="expectedresult">
             <mat-label>Expected Result</mat-label>
-            <input type="text" matInput formControlName="expectedresult">
-          </mat-form-field>
-          <mat-form-field class="replicate" >
+            <input type="text" matInput formControlName="expectedresult" />
+        </mat-form-field>
+        <mat-form-field class="replicate">
             <mat-label>State to Replicate</mat-label>
-            <input type="text" matInput formControlName="replicate">
-          </mat-form-field>
-          <div>
+            <input type="text" matInput formControlName="replicate" />
+        </mat-form-field>
+        <div>
             Select Image :
-            <input
-            formControlName="image"
-              accept="image/*"
-              type="file"
-            
-              (change)="onfileselected($event)"
-              id="file1"
-              #productphoto
-              name="image"
-              autocomplete="off"
-            />
-            <p><ngb-progressbar [showValue]="true" type="success" [value]="progress"></ngb-progressbar></p>
-            <div *ngIf="progress==100"><li>{{imagelist}}</li></div>
-          </div>
-          <div class="button">
-            <button mat-raised-button color="primary" (click)="onsubmit(formtemplate.value)">Submit</button>
-            <button mat-raised-button color="accent" type="reset" (click)="reset()">Cancle</button>
-          </div>
-
+            <input formControlName="image" accept="image/*" type="file" (change)="onfileselected($event)" id="file1"
+                #productphoto name="image" autocomplete="off" />
+            <p>
+                <ngb-progressbar [showValue]="true" type="success" [value]="progress"></ngb-progressbar>
+            </p>
+            <div *ngIf="progress == 100">
+                <li>{{ imagelist }}</li>
+            </div>
+        </div>
+        <div class="button">
+            <button mat-raised-button color="primary" (click)="onsubmit(formtemplate.value)">
+                Submit
+            </button>
+            <button mat-raised-button color="accent" type="reset" (click)="reset()">
+                Cancle
+            </button>
+        </div>
     </form>
-
 </div>

@@ -42,6 +42,16 @@ import { FilterPipe } from './filter.pipe';
 import { HighlightDirective } from './highlight.directive';
 //form end
 
+//loacl firbase emulator
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
+import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/database';
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions';
+import {
+  AngularFirestoreModule,
+  SETTINGS as FIRESTORE_SETTINGS,
+} from '@angular/fire/firestore';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +89,20 @@ import { HighlightDirective } from './highlight.directive';
     MatGridListModule,
     MatTabsModule,
   ],
-  providers: [],
+  providers: [
+    // { provide: USE_AUTH_EMULATOR, useValue: environment.emulator ? ['localhost', 9099] : undefined },
+    // { provide: USE_DATABASE_EMULATOR, useValue: environment.emulator ? ['localhost', 9000] : undefined },
+    // { provide: USE_FIRESTORE_EMULATOR, useValue: environment.emulator ? ['localhost', 8080] : undefined },
+    // { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.emulator ? ['localhost', 5001] : undefined },
+    {
+      provide: FIRESTORE_SETTINGS,
+      useValue: environment.emulator ? {
+        host: 'localhost:8080',
+        ssl: false
+      } : undefined
+    }
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
