@@ -22,7 +22,7 @@ export class HighlightDirective implements OnChanges {
 
   @Input() setTitle = false; //sets title attribute of HTML
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.content) {

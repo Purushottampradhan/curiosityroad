@@ -9,7 +9,7 @@
 
 .issuedetails {
   width: 50%;
-  height: 600px;
+  height: auto;
   background-color: whitesmoke;
   overflow: auto;
 }
@@ -29,7 +29,7 @@ mat-card {
 
 .projectdetails {
   width: 50%;
-  height: 600px;
+  height: auto;
   background-color: whitesmoke;
   overflow: auto;
 }
@@ -40,9 +40,9 @@ mat-card {
   justify-content: center;
   text-align: left;
   justify-content: left;
-  height: 40vh;
+  height: auto;
   background-color: rgb(243, 242, 242);
-  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 mat-card-actions {
@@ -116,4 +116,29 @@ td {
 }
 .icon mat-icon{
     margin: 10px;
+}
+.example-form{
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background-color: white;
+    height: auto;
+}
+.btn-outline-primary{
+  border:none;
+}
+.dropdown-menu{
+/* overflow: scroll; */
+width: 400%;
+}
+.item{
+/* background-color:whitesmoke; */
+width: auto;
+margin: 10px;
+
+/* z-index: 11; */
+/* opacity: 11; */
 }

@@ -88,6 +88,7 @@ import {
     MatSnackBarModule,
     MatGridListModule,
     MatTabsModule,
+    FormsModule,
   ],
   providers: [
     // { provide: USE_AUTH_EMULATOR, useValue: environment.emulator ? ['localhost', 9099] : undefined },

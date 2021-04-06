@@ -4,10 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 import { UserserviceService } from '../userservice.service';
 import * as moment from 'moment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { DecimalPipe } from '@angular/common';
+import { PipeTransform } from '@angular/core';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap/dropdown/dropdown-config';
 @Component({
   selector: 'app-issuedetail',
   templateUrl: './issuedetail.component.html',
   styleUrls: ['./issuedetail.component.css'],
+
 })
 export class IssuedetailComponent implements OnInit {
   selected: string | undefined;
@@ -21,15 +27,24 @@ export class IssuedetailComponent implements OnInit {
   time: any;
   moment: any = moment;
   visible = true;
+  visiblereply = true;
   commentform = new FormGroup({
     comment: new FormControl(''),
   });
+  commentreply = new FormGroup({
+    comment: new FormControl(''),
+  });
   comment: any;
+  replydetails: any;
+  filter = new FormControl('');
   constructor(
     private activatedroute: ActivatedRoute,
     private firestore: AngularFirestore,
-    public userservice: UserserviceService
-  ) {}
+    public userservice: UserserviceService,
+   
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.id = this.activatedroute.snapshot.params['id'];
@@ -65,26 +80,26 @@ export class IssuedetailComponent implements OnInit {
             console.log(error);
           }
         );
-        this.userservice.getcomment(this.issue?.issue_id).then(
+       this.userservice.getcomment(this.issue?.issue_id).then(
           (value) => {
             this.comment = value;
-            // console.log(value);
+            console.log(value);
           },
           (error) => {
             console.log(error);
           }
         );
-
-        // console.log(this.projectdetail);
-        // console.log(this.issue.title);
+ 
       },
       (error) => {
         console.log(error);
       }
     );
+
   }
+
   async update(newstatus: any) {
-     await this.firestore
+    await this.firestore
       .collection('issues')
       .doc(this.issue?.issue_id)
       .update({
@@ -104,11 +119,37 @@ export class IssuedetailComponent implements OnInit {
     this.userservice.commentdetails.issue_id = this.issue?.issue_id;
     this.userservice.commentdetails.data = data.comment;
     this.userservice.comment();
-    this.visible=true;
+    this.visible = true;
     this.commentform.reset();
   }
   resetcomment() {
     this.visible = true;
+    this.visiblereply = true;
     this.commentform.reset();
+  }
+  reply() {
+    this.visiblereply = false;
+  }
+  async submitcommentreply(id: any, data: any) {
+    // console.log(id, data);
+    this.userservice.replydetails.comment_id = id;
+    this.userservice.replydetails.data = data.comment;
+    this.userservice.replydetails.issue_id = this.issue.issue_id;
+    await this.userservice.reply();
+    this.visiblereply = true;
+    this.commentreply.reset();
+  }
+  viewreply(comment_id: any) {
+    // console.log(id)
+    this.userservice.getreply(comment_id).then(
+      (value) => {
+        console.log(value);
+        this.replydetails = value;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    // console.log('this is reply');
   }
 }

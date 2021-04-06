@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import * as moment from 'moment'; //for date function
+import db from "firebase"
 
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
@@ -21,6 +22,7 @@ export class UserserviceService implements OnInit {
     image: '',
     email: '',
   };
+  
   // projectdetails = {
   //   id: '',
   //   name: '',
@@ -57,6 +59,14 @@ export class UserserviceService implements OnInit {
     issue_id: '',
     user_id: '',
   };
+  replydetails = {
+    id: '',
+    data: '',
+    date: '',
+    issue_id: '',
+    user_id: '',
+    comment_id:'',
+  };
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -80,6 +90,43 @@ export class UserserviceService implements OnInit {
     );
   }
   ngOnInit(): void {}
+  //reply of comment submit
+  async reply(){
+  this.replydetails.id = uuidv4();
+  this.replydetails.user_id = this.user.user_id;
+  this.replydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
+  await this.firestore
+  .collection('reply')
+  .doc(this.replydetails.comment_id)
+  .collection('reply')
+  .doc(this.replydetails.id)
+  .set(this.replydetails)
+  .then(() => {
+    console.log('reply added');
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
+//get comment reply
+getreply(id:any) {
+  return new Promise((resolve, reject) => {
+    this.firestore
+      .collection('reply')
+      .doc(id)
+      .collection('reply')
+      .valueChanges()
+      .subscribe((data) => {
+        if (data) {
+          resolve(data);
+          // console.log(data);
+        } else {
+          reject('no comment found');
+        }
+      });
+  });
+}
+
   //add comment
   async comment() {
     this.commentdetails.id = uuidv4();
@@ -89,7 +136,7 @@ export class UserserviceService implements OnInit {
       .collection('comment')
       .doc(this.commentdetails.issue_id)
       .collection('comment')
-      .doc(uuidv4())
+      .doc(this.commentdetails.id)
       .set(this.commentdetails)
       .then(() => {
         console.log('comment added');
@@ -98,26 +145,45 @@ export class UserserviceService implements OnInit {
         console.log(error);
       });
   }
+  
+
   //get comment
   getcomment(id:any) {
     return new Promise((resolve, reject) => {
-      this.firestore
-        .collection('comment')
-        .doc(id)
-        .collection('comment')
-        .valueChanges()
-        .subscribe((data) => {
-          if (data) {
-            resolve(data);
-            // console.log(data);
-          } else {
-            reject('no comment found');
-          }
+      // const data=db.firestore().collection('comment').doc(id).collection('comment')
+      db.firestore().collection('comment').doc(id).collection('comment').onSnapshot((querySnapshot) =>{
+        var comment: any = [];
+        querySnapshot.forEach((doc)=> {
+            // console.log(doc.data())
+          comment.push(doc.data())
         });
+        if(comment.length){
+          resolve(comment)
+        }
+        else{
+          reject('no comment found')
+        }
+        // console.log(comment);
+      });
+
+
+      // this.firestore
+      //   .collection('comment')
+      //   .doc(id)
+      //   .collection('comment')
+      //   .valueChanges()
+      //   .subscribe((data) => {
+      //     if (data) {
+      //       resolve(data);
+      //       // console.log(data);
+      //     } else {
+      //       reject('no comment found');
+      //     }
+      //   });
     });
   }
 
-  //history of issue
+  //put history of issue
   async history(issue_id: any) {
     this.historydetails.id = uuidv4();
     this.historydetails.user_id = this.user.user_id;
@@ -157,7 +223,7 @@ export class UserserviceService implements OnInit {
     });
   }
 
-  //user login
+  //user login ui
   onlogin() {
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     var uiConfig = {
@@ -233,7 +299,7 @@ export class UserserviceService implements OnInit {
     //     (err) => console.log(err)
     //   );
   }
-  //get one user details
+  //get  user details
   getuser() {
     return new Promise((resolve, reject) => {
       this.firestore
