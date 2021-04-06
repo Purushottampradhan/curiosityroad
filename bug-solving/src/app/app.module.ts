@@ -41,7 +41,7 @@ import { ProjectdetailsComponent } from './projectdetails/projectdetails.compone
 import { FilterPipe } from './filter.pipe';
 import { HighlightDirective } from './highlight.directive';
 //form end
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 //loacl firbase emulator
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/database';
@@ -89,6 +89,7 @@ import {
     MatGridListModule,
     MatTabsModule,
     FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     // { provide: USE_AUTH_EMULATOR, useValue: environment.emulator ? ['localhost', 9099] : undefined },

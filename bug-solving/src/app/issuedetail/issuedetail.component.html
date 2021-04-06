@@ -66,60 +66,84 @@
                     <button mat-button>
                       <mat-icon>thumb_down</mat-icon>
                     </button>
-                    <button mat-button (click)="reply()">
-                      <mat-icon>comment</mat-icon>
-                    </button>
-                  </div>
-
-                  <div
-                    class="btn-group"
-                    ngbDropdown
-                    role="group"
-                    aria-label="Button group with nested dropdown"
-                  >
                     <button
+                      type="button"
                       class="btn btn-outline-primary"
-                      ngbDropdownToggle
-                      (click)="viewreply(details.id)"
+                      (click)="
+                        isCollapsedreply[details?.id] = !isCollapsedreply[
+                          details?.id
+                        ]
+                      "
+                      [attr.aria-expanded]="!isCollapsedreply"
+                      aria-controls="collapseExample"
+                    >
+                      <mat-icon>reply</mat-icon>
+                    </button>
+                    <div
+                      #collapse="ngbCollapse"
+                      [(ngbCollapse)]="!isCollapsedreply[details?.id]"
+                    >
+                      <div class="card">
+                        <div class="card-body">
+                          <form
+                            class="example-form"
+                            [formGroup]="commentreply"
+                          >
+                            <img
+                              [src]="userservice.user.image"
+                              class="comment-image"
+                            />
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Comment</mat-label>
+                              <input
+                                formControlName="comment"
+                                type="text"
+                                matInput
+                                (focus)="onfocus()"
+                                autofocus
+                              />
+                            </mat-form-field>
+                            <div class="comment-btn">
+                              <button
+                                mat-button
+                                [hidden]="visible"
+                                (click)="submitcommentreply(details?.id,commentreply.value)"
+                              >
+                                Save
+                              </button>
+                              <button
+                                mat-button
+                                [hidden]="visible"
+                                (click)="resetcomment()"
+                              >
+                                Cancle
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      (click)="
+                        isCollapsed[details?.id] = !isCollapsed[details?.id]
+                      "
+                      [attr.aria-expanded]="!isCollapsed"
+                      aria-controls="collapseExample"
                     >
                       View Reply
                     </button>
-
-                    <div
-                      class="dropdown-menu"
-                      ngbDropdownMenu
-                      aria-labelledby="navbarDropdown1"
-                    >
-                      <div *ngFor="let user of userdetails">
-                        <div
-                          class="item"
-                          ngbDropdownItem
-                          *ngFor="let details of replydetails"
-                        >
-                          <div *ngIf="details?.user_id == user?.user_id">
-                            <img
-                              class="comment-data-image"
-                              src="{{ user?.image }}"
-                            />
-                            <div class="comment-user">
-                              {{ user?.username }}
-                            </div>
-
-                            {{ details?.data }}
-                            {{
-                              moment(details.date, "YYYYMMDDHHmmss").fromNow()
-                            }}
-
-                            <div class="icon">
-                              <button mat-button>
-                                <mat-icon>thumb_up</mat-icon>
-                              </button>
-                              <button mat-button>
-                                <mat-icon>thumb_down</mat-icon>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                  </p>
+                  <div
+                    #collapse="ngbCollapse"
+                    [(ngbCollapse)]="!isCollapsed[details?.id]"
+                  >
+                    <div class="card">
+                      <div class="card-body">
+                        You can collapse this card by clicking Toggle
                       </div>
                     </div>
                   </div>
@@ -172,7 +196,21 @@
         <th></th>
         <tr>
           <td>Assignee</td>
-          <td></td>
+          <td class="select-box">
+            <ng-multiselect-dropdown
+              [placeholder]="'Assignee'"
+              [settings]="dropdownSettings"
+              [data]="userdetails"
+              [(ngModel)]="selectedItems"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
+
+            <button mat-button>
+              <mat-icon>people</mat-icon>
+            </button>
+          </td>
         </tr>
         <tr>
           <td>Created By</td>
@@ -216,7 +254,7 @@
     </mat-form-field>
     <div class="comment-btn">
         <button mat-button [hidden]="visible" (click)="
-submitcommentreply(details.id, commentreply.value)
+submitcommentreply(commentreply.value)
 ">
             Save
         </button>

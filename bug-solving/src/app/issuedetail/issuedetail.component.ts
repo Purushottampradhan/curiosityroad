@@ -4,16 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { UserserviceService } from '../userservice.service';
 import * as moment from 'moment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { DecimalPipe } from '@angular/common';
-import { PipeTransform } from '@angular/core';
-import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap/dropdown/dropdown-config';
+import { identity, Observable } from 'rxjs';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-issuedetail',
   templateUrl: './issuedetail.component.html',
   styleUrls: ['./issuedetail.component.css'],
-
 })
 export class IssuedetailComponent implements OnInit {
   selected: string | undefined;
@@ -37,16 +33,35 @@ export class IssuedetailComponent implements OnInit {
   comment: any;
   replydetails: any;
   filter = new FormControl('');
+  dropdownList = [] as any;
+  selectedItems = [] as any;
+  dropdownSettings: IDropdownSettings | any;
+  public isCollapsed: boolean[] = [];
+  public isCollapsedreply: boolean[] = [];
   constructor(
     private activatedroute: ActivatedRoute,
     private firestore: AngularFirestore,
-    public userservice: UserserviceService,
-   
-  ) {
-
-  }
+    public userservice: UserserviceService
+  ) {}
 
   ngOnInit(): void {
+    // this.dropdownList = [
+    //   { item_id: 1, item_text: 'name1' },
+    //   { item_id: 2, item_text: 'name2' },
+    //   { item_id: 3, item_text: 'name3' },
+    //   { item_id: 4, item_text: 'name4' },
+    //   { item_id: 5, item_text: 'name5' }
+    // ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'user_id',
+      textField: 'username',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 2,
+      allowSearchFilter: true,
+    };
+
     this.id = this.activatedroute.snapshot.params['id'];
     this.userservice.getone(this.id).then(
       async (value) => {
@@ -65,7 +80,7 @@ export class IssuedetailComponent implements OnInit {
         await this.userservice.getuser().then(
           (value) => {
             this.userdetails = value;
-            // console.log(this.userdetails)
+            // console.log(this.userdetails);
           },
           (error) => {
             console.log(error);
@@ -80,22 +95,20 @@ export class IssuedetailComponent implements OnInit {
             console.log(error);
           }
         );
-       this.userservice.getcomment(this.issue?.issue_id).then(
+        this.userservice.getcomment(this.issue?.issue_id).then(
           (value) => {
             this.comment = value;
-            console.log(value);
+            // console.log(value);
           },
           (error) => {
             console.log(error);
           }
         );
- 
       },
       (error) => {
         console.log(error);
       }
     );
-
   }
 
   async update(newstatus: any) {
@@ -127,10 +140,7 @@ export class IssuedetailComponent implements OnInit {
     this.visiblereply = true;
     this.commentform.reset();
   }
-  reply() {
-    this.visiblereply = false;
-  }
-  async submitcommentreply(id: any, data: any) {
+  async submitcommentreply(id:any,data: any) {
     // console.log(id, data);
     this.userservice.replydetails.comment_id = id;
     this.userservice.replydetails.data = data.comment;
@@ -141,6 +151,7 @@ export class IssuedetailComponent implements OnInit {
   }
   viewreply(comment_id: any) {
     // console.log(id)
+    // console.log(comment_id)
     this.userservice.getreply(comment_id).then(
       (value) => {
         console.log(value);
@@ -151,5 +162,11 @@ export class IssuedetailComponent implements OnInit {
       }
     );
     // console.log('this is reply');
+  }
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 }
