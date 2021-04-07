@@ -9,7 +9,7 @@
 
 .issuedetails {
   width: 50%;
-  height: auto;
+  height:100vh;
   background-color: whitesmoke;
   overflow: auto;
 }
@@ -29,7 +29,7 @@ mat-card {
 
 .projectdetails {
   width: 50%;
-  height: auto;
+  height: 100vh;
   background-color: whitesmoke;
   overflow: auto;
 }
@@ -145,7 +145,7 @@ margin: 10px;
 :host ::ng-deep .multiselect-dropdown .dropdown-list {
   display: inline-block;
   border: 1px solid #d01c1c;
-  width: 200%;
+  width: 300px;
   padding: 6px 12px;
   margin-bottom: 0;
   font-size: 12px;

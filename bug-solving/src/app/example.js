@@ -1,19 +1,39 @@
-import { Observable } from 'rxjs';
- 
-const observable = new Observable(subscriber => {
-  subscriber.next(1);
-  subscriber.next(2);
-  subscriber.next(3);
-  setTimeout(() => {
-    subscriber.next(4);
-    subscriber.complete();
-  }, 1000);
+const { __values } = require("tslib");
+
+let myPromise = new Promise((myResolve, myReject)=> {
+  let x = 0;
+
+// The producing code (this may take some time)
+
+  if (x == 0) {
+    myResolve("OK");
+  } else {
+    myReject("Error");
+  }
 });
- 
-console.log('just before subscribe');
-observable.subscribe({
-  next(x) { console.log('got value ' + x); },
-  error(err) { console.error('something wrong occurred: ' + err); },
-  complete() { console.log('done'); }
-});
-console.log('just after subscribe');
+myPromise.then(
+  value=>{console.log(value)},
+  error=>{console.log(error)}
+)
+ function f() {
+
+  return  new Promise((resolve, reject) => {
+    // resolve("done!");
+    reject('not done')
+  });
+
+  let result =  promise; // wait until the promise resolves (*)
+return result
+  console.log(result)
+}
+
+async function aaaaA(){
+  try {
+    let data= await f()   
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+aaaaA()
+

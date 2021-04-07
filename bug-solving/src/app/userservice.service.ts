@@ -8,13 +8,16 @@ import { Router } from '@angular/router';
 import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import * as moment from 'moment'; //for date function
-import db from "firebase"
+import db from 'firebase';
+import { promise } from 'selenium-webdriver';
+import { snapshotChanges } from '@angular/fire/database';
 
 // import 'firebaseui/dist/firebaseui.css'
 @Injectable({
   providedIn: 'root',
 })
 export class UserserviceService implements OnInit {
+  //variables
   emailid: any;
   user = {
     user_id: '',
@@ -22,25 +25,6 @@ export class UserserviceService implements OnInit {
     image: '',
     email: '',
   };
-  
-  // projectdetails = {
-  //   id: '',
-  //   name: '',
-  //   discription: '',
-  // };
-  // issuedetails = {
-  //   discription: '',
-  //   expectedresult: '',
-  //   replicate: '',
-  //   status: '',
-  //   title: '',
-  //   project_id: '',
-  //   user_id: '',
-  // };
-  // userdetails = {
-  //   name: '',
-  //   image: '',
-  // };
   uuid: any; //this is unique id for issue id
   val: any; //details of the project
   issue: any; //store all isssue list
@@ -65,8 +49,13 @@ export class UserserviceService implements OnInit {
     date: '',
     issue_id: '',
     user_id: '',
-    comment_id:'',
+    comment_id: '',
   };
+  commentdata: any;
+  allhistory: any;
+  userdetails: any;
+
+  //end variables
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -91,41 +80,41 @@ export class UserserviceService implements OnInit {
   }
   ngOnInit(): void {}
   //reply of comment submit
-  async reply(){
-  this.replydetails.id = uuidv4();
-  this.replydetails.user_id = this.user.user_id;
-  this.replydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
-  await this.firestore
-  .collection('reply')
-  .doc(this.replydetails.comment_id)
-  .collection('reply')
-  .doc(this.replydetails.id)
-  .set(this.replydetails)
-  .then(() => {
-    console.log('reply added');
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-}
-//get comment reply
-getreply(id:any) {
-  return new Promise((resolve, reject) => {
-    this.firestore
+  async reply() {
+    this.replydetails.id = uuidv4();
+    this.replydetails.user_id = this.user.user_id;
+    this.replydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
+    await this.firestore
       .collection('reply')
-      .doc(id)
+      .doc(this.replydetails.comment_id)
       .collection('reply')
-      .valueChanges()
-      .subscribe((data) => {
-        if (data) {
-          resolve(data);
-          // console.log(data);
-        } else {
-          reject('no comment found');
-        }
+      .doc(this.replydetails.id)
+      .set(this.replydetails)
+      .then(() => {
+        console.log('reply added');
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  });
-}
+  }
+  //get comment reply
+  getreply(id: any) {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection('reply')
+        .doc(id)
+        .collection('reply')
+        .valueChanges()
+        .subscribe((data) => {
+          if (data) {
+            resolve(data);
+            // console.log(data);
+          } else {
+            reject('no comment found');
+          }
+        });
+    });
+  }
 
   //add comment
   async comment() {
@@ -145,44 +134,30 @@ getreply(id:any) {
         console.log(error);
       });
   }
-  
 
   //get comment
-  getcomment(id:any) {
+  getcomment(id: any) {
     return new Promise((resolve, reject) => {
       // const data=db.firestore().collection('comment').doc(id).collection('comment')
-      db.firestore().collection('comment').doc(id).collection('comment').onSnapshot((querySnapshot) =>{
-        var comment: any = [];
-        querySnapshot.forEach((doc)=> {
-            // console.log(doc.data())
-          comment.push(doc.data())
+      db.firestore()
+        .collection('comment')
+        .doc(id)
+        .collection('comment')
+        .onSnapshot((querySnapshot) => {
+          var comment: any = [];
+          querySnapshot.forEach((doc) => {
+            comment.push(doc.data());
+          });
+          if (comment.length) {
+            // console.log(comment)
+            this.commentdata=comment
+            resolve(comment);
+          } else {
+            reject('no comment found ');
+          }
         });
-        if(comment.length){
-          resolve(comment)
-        }
-        else{
-          reject('no comment found')
-        }
-        // console.log(comment);
-      });
-
-
-      // this.firestore
-      //   .collection('comment')
-      //   .doc(id)
-      //   .collection('comment')
-      //   .valueChanges()
-      //   .subscribe((data) => {
-      //     if (data) {
-      //       resolve(data);
-      //       // console.log(data);
-      //     } else {
-      //       reject('no comment found');
-      //     }
-      //   });
     });
   }
-
   //put history of issue
   async history(issue_id: any) {
     this.historydetails.id = uuidv4();
@@ -204,7 +179,7 @@ getreply(id:any) {
     // console.log('after added history');
   }
 
-  //get history of issue
+  //get all history of selected issue
   gethistory(issue_id: any) {
     // console.log(issue_id)
     return new Promise((resolve, reject) => {
@@ -222,6 +197,30 @@ getreply(id:any) {
         });
     });
   }
+  // example(issue_id:any){
+  //  return new Promise((resolve,reject)=>{
+  //    this.firestore.collection('history').doc(issue_id).collection('historydetails').snapshotChanges().subscribe((details)=>{
+  //     //  console.log(details)
+  //      var arr:any=[];
+  //     details.forEach((snap)=>{
+  //       // console.log(snap.type=='added')
+  //       arr.push(snap.payload.doc.data())
+  //       // console.log(snap.payload.doc.data())
+        
+  //     })
+  //     // console.log(arr)
+  //     if(arr){
+  //       this.allhistory=arr
+  //       resolve(arr)
+  //     }
+  //     else{
+  //       reject("no history found")
+  //     }
+
+  //    })
+
+  //  })
+  // }
 
   //user login ui
   onlogin() {
@@ -301,18 +300,24 @@ getreply(id:any) {
   }
   //get  user details
   getuser() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve,reject)=>{
       this.firestore
         .collection('users')
         .valueChanges()
-        .subscribe((data) => {
+        .subscribe((data: any) => {
           if (data) {
-            resolve(data);
-          } else {
-            reject('no user data found');
+            // this.userdetails = data;
+            // console.log(this.userdetails);
+            resolve(data)
+            // return this.userdetails
+          }else
+          {
+            reject("no data found")
           }
         });
-    });
+      });
+   
+
     // this.firestore
     //   .collection('users')
     //   .doc(id)
@@ -330,7 +335,6 @@ getreply(id:any) {
     //   );
   }
   //get one project details
-
   getproject(id: any) {
     return new Promise((resolve, reject) => {
       this.firestore
@@ -363,7 +367,7 @@ getreply(id:any) {
     //     (err) => console.log(err)
     //   );
   }
-  //get issue list
+  //get all issue list
   issuelist() {
     this.firestore
       .collection('issues')
@@ -440,7 +444,7 @@ getreply(id:any) {
         console.log(error);
       });
   }
-
+  //delet the issue
   async deleteissue(id: any) {
     let r = confirm('do you want to delete');
     if (r) {
