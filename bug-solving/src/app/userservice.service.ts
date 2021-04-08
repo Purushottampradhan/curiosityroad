@@ -29,6 +29,7 @@ export class UserserviceService implements OnInit {
   val: any; //details of the project
   issue: any; //store all isssue list
   currentuser: any; //store the current user logged in
+
   historydetails = {
     id: '',
     data: '',
@@ -36,13 +37,16 @@ export class UserserviceService implements OnInit {
     issue_id: '',
     user_id: '',
   }; //store the data of history
+
   commentdetails = {
     id: '',
     data: '',
     date: '',
     issue_id: '',
     user_id: '',
+    comment_id:'',
   };
+
   replydetails = {
     id: '',
     data: '',
@@ -51,6 +55,7 @@ export class UserserviceService implements OnInit {
     user_id: '',
     comment_id: '',
   };
+
   commentdata: any;
   allhistory: any;
   userdetails: any;
@@ -79,6 +84,7 @@ export class UserserviceService implements OnInit {
     );
   }
   ngOnInit(): void {}
+
   //reply of comment submit
   async reply() {
     this.replydetails.id = uuidv4();
@@ -97,8 +103,9 @@ export class UserserviceService implements OnInit {
         console.log(error);
       });
   }
+
   //get comment reply
-  getreply(id: any) {
+   getreply(id: any) {
     return new Promise((resolve, reject) => {
       this.firestore
         .collection('reply')
@@ -121,13 +128,15 @@ export class UserserviceService implements OnInit {
     this.commentdetails.id = uuidv4();
     this.commentdetails.user_id = this.user.user_id;
     this.commentdetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
+    console.log(this.commentdetails)
     await this.firestore
-      .collection('comment')
-      .doc(this.commentdetails.issue_id)
       .collection('comment')
       .doc(this.commentdetails.id)
       .set(this.commentdetails)
       .then(() => {
+        // console.log(this.commentdetails)
+        this.commentdetails.comment_id='';
+        this.commentdetails.issue_id='';
         console.log('comment added');
       })
       .catch((error) => {
@@ -136,20 +145,19 @@ export class UserserviceService implements OnInit {
   }
 
   //get comment
-  getcomment(id: any) {
+  getcomment(issue_id: any) {
     return new Promise((resolve, reject) => {
-      // const data=db.firestore().collection('comment').doc(id).collection('comment')
+      // console.log(issue_id)
       db.firestore()
         .collection('comment')
-        .doc(id)
-        .collection('comment')
+        .where('issue_id', '==', `${issue_id}`)
         .onSnapshot((querySnapshot) => {
           var comment: any = [];
           querySnapshot.forEach((doc) => {
             comment.push(doc.data());
           });
           if (comment.length) {
-            // console.log(comment)
+            // console.log("this is from comment service",comment)
             this.commentdata=comment
             resolve(comment);
           } else {
@@ -158,6 +166,7 @@ export class UserserviceService implements OnInit {
         });
     });
   }
+
   //put history of issue
   async history(issue_id: any) {
     this.historydetails.id = uuidv4();
@@ -197,6 +206,7 @@ export class UserserviceService implements OnInit {
         });
     });
   }
+
   // example(issue_id:any){
   //  return new Promise((resolve,reject)=>{
   //    this.firestore.collection('history').doc(issue_id).collection('historydetails').snapshotChanges().subscribe((details)=>{
@@ -274,39 +284,17 @@ export class UserserviceService implements OnInit {
           }
         });
     });
-
-    // this.firestore
-    //   .collection('issues')
-    //   .doc(id)
-    //   .valueChanges()
-    //   .subscribe(
-    //     (data) => {
-    //       if (data) {
-    //         this.oneissue = data;
-    //         this.issuedetails.discription = this.oneissue.discription;
-    //         this.issuedetails.status = this.oneissue.status;
-    //         this.issuedetails.expectedresult = this.oneissue.expectedresult;
-    //         this.issuedetails.replicate = this.oneissue.replicate;
-    //         this.issuedetails.title = this.oneissue.title;
-    //         this.getproject(this.oneissue.project_id);
-    //         this.getuser(this.oneissue.user_id);
-    //       } else {
-    //         console.log('data not found');
-    //         this.router.navigate(['/project']);
-    //       }
-    //     },
-    //     (err) => console.log(err)
-    //   );
   }
+
   //get  user details
   getuser() {
     return new Promise((resolve,reject)=>{
       this.firestore
         .collection('users')
         .valueChanges()
-        .subscribe((data: any) => {
+        .subscribe(async (data: any) => {
           if (data) {
-            // this.userdetails = data;
+            this.userdetails = await data;
             // console.log(this.userdetails);
             resolve(data)
             // return this.userdetails
@@ -316,24 +304,8 @@ export class UserserviceService implements OnInit {
           }
         });
       });
-   
-
-    // this.firestore
-    //   .collection('users')
-    //   .doc(id)
-    //   .valueChanges()
-    //   .subscribe(
-    //     (data) => {
-    //       if (data) {
-    //         this.selecteduser = data;
-    //         // console.log(this.selecteduser);
-    //         this.userdetails.name = this.selecteduser.username;
-    //         this.userdetails.image = this.selecteduser.image;
-    //       }
-    //     },
-    //     (err) => console.log(err)
-    //   );
   }
+
   //get one project details
   getproject(id: any) {
     return new Promise((resolve, reject) => {
@@ -349,24 +321,8 @@ export class UserserviceService implements OnInit {
           }
         });
     });
-    // this.firestore
-    //   .collection('project')
-    //   .doc(id)
-    //   .valueChanges()
-    //   .subscribe(
-    //     (data) => {
-    //       // console.log(data);
-    //       this.yourproject = data;
-    //       // this.yourprojectname=this.yourproject.project_name;
-    //       // this.yourprojectid=this.yourproject.project_id;
-    //       this.projectdetails.id = this.yourproject.project_id;
-    //       this.projectdetails.name = this.yourproject.project_name;
-    //       this.projectdetails.discription = this.yourproject.discription;
-    //       // console.log(this.projectdetails);
-    //     },
-    //     (err) => console.log(err)
-    //   );
   }
+
   //get all issue list
   issuelist() {
     this.firestore
@@ -407,7 +363,6 @@ export class UserserviceService implements OnInit {
         // this.userlogin(data.user_id);
         this.historydetails.issue_id = data.issue_id;
         this.historydetails.data = 'issue created';
-
         // console.log(moment().format('YYYYMMDDHHmmss'))
         await this.history(data.issue_id);
         alert('document sucessfully added');
@@ -430,6 +385,7 @@ export class UserserviceService implements OnInit {
         console.log(error.message);
       });
   }
+
   //create new project
   async createproject(data: any) {
     console.log(data);
@@ -444,7 +400,8 @@ export class UserserviceService implements OnInit {
         console.log(error);
       });
   }
-  //delet the issue
+
+  //delete the issue
   async deleteissue(id: any) {
     let r = confirm('do you want to delete');
     if (r) {

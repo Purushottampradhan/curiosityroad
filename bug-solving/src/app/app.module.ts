@@ -51,8 +51,9 @@ import {
   AngularFirestoreModule,
   SETTINGS as FIRESTORE_SETTINGS,
 } from '@angular/fire/firestore';
-import { ProjectdetaComponent } from './issuedetail/projectdeta/projectdeta.component';
+
 import { IssuedataComponent } from './issuedetail/issuedata/issuedata.component';
+import { ActivityComponent } from './issuedetail/activity/activity.component';
 
 @NgModule({
   declarations: [
@@ -68,8 +69,8 @@ import { IssuedataComponent } from './issuedetail/issuedata/issuedata.component'
     ProjectdetailsComponent,
     FilterPipe,
     HighlightDirective,
-    ProjectdetaComponent,
     IssuedataComponent,
+    ActivityComponent,
   ],
   imports: [
     BrowserModule,

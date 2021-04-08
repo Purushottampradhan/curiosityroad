@@ -1,1 +1,61 @@
-<p>issuedata works!</p>
+<div class="issuedetails">
+    <mat-card>
+        <mat-form-field appearance="fill">
+            <mat-label>To Do</mat-label>
+            <mat-select [(value)]="selected" (selectionChange)="update(selected)">
+                <mat-option>Clear</mat-option>
+                <mat-option value="progress">IN PROGRESS</mat-option>
+                <mat-option value="review">IN REVIEW</mat-option>
+                <mat-option value="done">DONE</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card>
+    <!-- {{selected}} -->
+    <mat-card>
+        <table mat-table>
+            <th></th>
+            <th></th>
+            <tr>
+                <td>Assignee</td>
+                <td>
+                    <ng-multiselect-dropdown [placeholder]="'Assignee'" [settings]="dropdownSettings"
+                        [data]="userservice.userdetails" [(ngModel)]="selectedItems"
+                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>Created By</td>
+                <div *ngFor="let user of userservice.userdetails">
+                    <td *ngIf="user?.user_id == issue?.user_id">
+                        <img class="image" src="{{ user?.image }}" />{{ user?.username }}
+                    </td>
+                </div>
+            </tr>
+            <tr>
+                <td>Issue Name</td>
+                <td>{{ issue?.title }}</td>
+            </tr>
+            <tr>
+                <td>Discription</td>
+                <td>{{ issue?.discription }}</td>
+            </tr>
+            <tr>
+                <td>images</td>
+                <td *ngFor="let image of issue?.attachements "><a href="{{image}}"><mat-icon>image</mat-icon></a> </td>
+            </tr>
+            <tr>
+                <td>step to replicate</td>
+                <td>{{ issue?.replicate }}</td>
+            </tr>
+            <tr>
+                <td>Expected Result</td>
+                <td>{{ issue?.expectedresult }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ issue?.status }}</td>
+            </tr>
+        </table>
+    </mat-card>
+</div>

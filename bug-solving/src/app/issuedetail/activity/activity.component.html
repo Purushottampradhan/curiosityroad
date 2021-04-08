@@ -1,0 +1,140 @@
+<div class="projectdetails">
+    <mat-card>
+        <mat-card-title>Activity</mat-card-title>
+        <mat-tab-group animationDuration="0ms">
+
+            <mat-tab>
+                <ng-template mat-tab-label class="tab">
+                    <mat-icon class="example-tab-icon">comment</mat-icon>
+                    Comment
+                </ng-template>
+                <mat-card-content class="activity">
+
+                    <form class="example-form" [formGroup]="commentgroup">
+                        <img [src]="userservice.user.image" class="comment-image" />
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Comment</mat-label>
+                            <input formControlName="comment" type="text" id='comment' name='comment' matInput
+                                (focus)="onfocus()" />
+                        </mat-form-field>
+                        <div class="comment-btn">
+                            <button mat-button [hidden]="visible" (click)="submitcomment(commentgroup.value)">
+                                Save
+                            </button>
+                            <button mat-button [hidden]="visible" (click)="resetcomment()">
+                                Cancle
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="comment">
+                        <div *ngFor="let comment of commentdata">
+                            <div *ngFor="let user of userservice.userdetails">
+                                <div *ngIf="comment?.user_id == user?.user_id">
+                                    <div class="user-comment-data">
+                                        <img class="comment-data-image" src="{{ user?.image }}" />
+                                        <div class="comment-user">
+                                            {{ user?.username }}
+                                        </div>
+                                    </div>
+                                    <div class="comment-data">
+                                        {{ comment?.data }} &nbsp;
+                                        {{ moment(comment.date, "YYYYMMDDHHmmss").fromNow() }}
+                                    </div>
+                                    <div class="icon">
+                                        <button mat-button>
+                                            <mat-icon>thumb_up</mat-icon>
+                                        </button>
+                                        <button mat-button>
+                                            <mat-icon>thumb_down</mat-icon>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            (click)=" isCollapsedreply[comment?.id] = !isCollapsedreply[ comment?.id ]"
+                                            [attr.aria-expanded]="!isCollapsedreply" aria-controls="collapseExample">
+                                            <mat-icon>reply</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsedreply[comment?.id]">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <form class="example-form" [formGroup]="commentgroup">
+                                                    <img [src]="userservice.user.image" class="comment-image" />
+                                                    <mat-form-field class="example-full-width">
+                                                        <mat-label>Comment</mat-label>
+                                                        <input formControlName="comment" type="text" matInput
+                                                            (focus)="onfocus()" autofocus />
+                                                    </mat-form-field>
+                                                    <div class="comment-btn">
+                                                        <button mat-button [hidden]="visible"
+                                                            (click)=" submitcommentreply(comment?.id, commentgroup.value )">
+                                                            Save
+                                                        </button>
+                                                        <button mat-button [hidden]="visible" (click)="resetcomment()">
+                                                            Cancle
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <button type="button" class="btn btn-outline-primary" (click)="
+                    isCollapsed[comment?.id] = !isCollapsed[comment?.id]
+                  " [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"
+                                            (click)="viewreply(comment?.id)">
+                                            View Reply
+                                        </button>
+                                    </p>
+                                    <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed[comment?.id]">
+                                        <div class="card">
+                                            <div class="card-body" *ngFor="let reply of commentdata">
+                                                <div *ngFor="let user of userservice.userdetails">
+                                                    <p *ngIf="reply?.user_id == user?.user_id">
+                                                        <img class="comment-data-image" src="{{ user?.image }}" />
+
+                                                        {{ user?.username }}
+
+                                                        <b>{{ reply?.data }} </b>
+                                                        {{ moment(reply.date, "YYYYMMDDHHmmss").fromNow() }}
+                                                        <button mat-button>
+                                                            <mat-icon>thumb_up</mat-icon>
+                                                        </button>
+                                                        <button mat-button>
+                                                            <mat-icon>thumb_down</mat-icon>
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-tab>
+
+            <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon">history</mat-icon>
+                        History
+                    </ng-template>
+                    <mat-card-content class="activity">
+                        <div *ngFor="let history of allhistory">
+                            <div *ngFor="let user of userservice.userdetails">
+                                <div *ngIf="history?.user_id == user?.user_id" class="history">
+                                    <img class="image" src="{{ user?.image }}" />
+                                    <div class="historydata">
+                                        {{ user?.username }} &nbsp;
+                                        <b> {{ history?.data }} &nbsp; </b>
+                                        {{ moment(history.date, "YYYYMMDDHHmmss").fromNow() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+
+        </mat-tab-group>
+    </mat-card>
+</div>

@@ -1,0 +1,27 @@
+.comment-image {
+  width: 30px;
+  border-radius: 30px;
+  padding: 5px;
+}
+
+.comment-data-image {
+  width: 25px;
+  border-radius: 30px;
+  padding: 5px;
+}
+
+.comment-user {
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.user-comment-data {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image {
+  height: 25px;
+  border-radius: 30px;
+  margin: 5px;
+}

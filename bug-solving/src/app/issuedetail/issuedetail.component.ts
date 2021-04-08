@@ -13,7 +13,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./issuedetail.component.css'],
 })
 export class IssuedetailComponent implements OnInit {
-  selected: string | undefined;
+  // selected: string | undefined;
   id: any;
   issue: any;
   projectdetail: any;
@@ -34,9 +34,9 @@ export class IssuedetailComponent implements OnInit {
   comment: any;
   replydetails: any;
 
-  dropdownList = [] as any;
-  selectedItems = [] as any;
-  dropdownSettings: IDropdownSettings | any;
+  // dropdownList = [] as any;
+  // selectedItems = [] as any;
+  // dropdownSettings: IDropdownSettings | any;
   public isCollapsed: boolean[] = [];
   public isCollapsedreply: boolean[] = [];
   constructor(
@@ -53,15 +53,15 @@ export class IssuedetailComponent implements OnInit {
     //   { item_id: 4, item_text: 'name4' },
     //   { item_id: 5, item_text: 'name5' },
     // ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'user_id',
-      textField: 'username',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 2,
-      allowSearchFilter: true,
-    };
+    // this.dropdownSettings = {
+    //   singleSelection: false,
+    //   idField: 'user_id',
+    //   textField: 'username',
+    //   selectAllText: 'Select All',
+    //   unSelectAllText: 'UnSelect All',
+    //   itemsShowLimit: 2,
+    //   allowSearchFilter: true,
+    // };
     //get  all user details
     //  var data=this.userservice.getuser()
     //  data.then(
@@ -94,14 +94,14 @@ export class IssuedetailComponent implements OnInit {
         );
 
         //get history details of the issue
-        try {
-          this.allhistory = await this.userservice.gethistory(
-            this.issue?.issue_id
-          );
-          //  this.userservice.example(this.issue?.issue_id)
-        } catch (error) {
-          console.log(error);
-        }
+        // try {
+        //   this.allhistory = await this.userservice.gethistory(
+        //     this.issue?.issue_id
+        //   );
+        //   //  this.userservice.example(this.issue?.issue_id)
+        // } catch (error) {
+        //   console.log(error);
+        // }
 
         //get user all details 
         try {
@@ -112,11 +112,11 @@ export class IssuedetailComponent implements OnInit {
         }
 
         //get all comment of the issue
-        try {
-          this.userservice.getcomment(this.issue?.issue_id)
-        } catch (error) {
-          console.log(error)
-        }
+      //   try {
+      //     this.userservice.getcomment(this.issue?.issue_id)
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
       },
       (error) => {
         console.log(error);
@@ -124,23 +124,10 @@ export class IssuedetailComponent implements OnInit {
     );
   }
   //update the status
-  async update(newstatus: any) {
-    await this.firestore
-      .collection('issues')
-      .doc(this.issue?.issue_id)
-      .update({
-        status: newstatus,
-      })
-      .then(async () => {
-        this.userservice.historydetails.data = `status changed to ${newstatus}`;
-        this.userservice.historydetails.issue_id = this.issue.issue_id;
-        await this.userservice.history(this.issue.issue_id);
-        console.log('document updated sucesfully');
-      });
-  }
-  onfocus() {
-    this.visible = false;
-  }
+
+  // onfocus() {
+  //   this.visible = false;
+  // }
   //submit the comment
   async submitcomment(data: any) {
     this.userservice.commentdetails.issue_id = this.issue?.issue_id;
@@ -174,10 +161,10 @@ export class IssuedetailComponent implements OnInit {
       }
     );
   }
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
+  // onItemSelect(item: any) {
+  //   console.log(item);
+  // }
+  // onSelectAll(items: any) {
+  //   console.log(items);
+  // }
 }

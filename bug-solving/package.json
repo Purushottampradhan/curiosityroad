@@ -28,6 +28,7 @@
     "firebase": "^8.3.1",
     "firebaseui": "^4.8.0",
     "firebaseui-angular": "^5.1.2",
+    "kill-port": "^1.6.1",
     "moment": "^2.29.1",
     "ng-multiselect-dropdown": "^0.3.4",
     "rxjs": "~6.6.0",

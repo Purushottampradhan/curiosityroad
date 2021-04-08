@@ -1,0 +1,33 @@
+.issuedetails {
+  /* width: 50%; */
+  height: 100vh;
+  background-color: whitesmoke;
+  /* overflow: auto; */
+}
+
+.image {
+  height: 25px;
+  border-radius: 30px;
+  margin: 5px;
+}
+
+td {
+  margin: 10px;
+  padding: 20px;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-list {
+  display: inline-block;
+  border: 1px solid #d01c1c;
+  width: 300px;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border-radius: 4px;
+}
