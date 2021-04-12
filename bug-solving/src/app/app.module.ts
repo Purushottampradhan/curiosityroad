@@ -55,6 +55,9 @@ import {
 import { IssuedataComponent } from './issuedetail/issuedata/issuedata.component';
 import { ActivityComponent } from './issuedetail/activity/activity.component';
 
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +98,7 @@ import { ActivityComponent } from './issuedetail/activity/activity.component';
     MatTabsModule,
     FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    // SocketIoModule.forRoot(config)
   ],
   providers: [
     // { provide: USE_AUTH_EMULATOR, useValue: environment.emulator ? ['localhost', 9099] : undefined },

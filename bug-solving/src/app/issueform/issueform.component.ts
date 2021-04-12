@@ -42,6 +42,7 @@ export class IssueformComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
   onfileselected(event: any) {
     this.imagelist.push(this.formtemplate.value.image);
     var n = Date.now();
@@ -81,10 +82,12 @@ export class IssueformComponent implements OnInit {
         }
       );
   }
+
   reset() {
     this.progress = 0;
     this.formtemplate.reset();
   }
+  
   onsubmit(formvalue: any) {
     // console.log(formvalue);
     if (this.images.length) {

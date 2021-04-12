@@ -25,3 +25,24 @@
   border-radius: 30px;
   margin: 5px;
 }
+
+/* .history {
+  background-color: rgb(224, 224, 245);
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+/* .comment {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(231, 231, 228);
+  margin: 5px;
+  padding: 10px;
+} */
+
+/* .historydata {
+  margin-top: 8px;
+} */

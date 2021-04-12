@@ -78,35 +78,35 @@
                                         </div>
                                     </div>
                                     <p>
-                                        <button type="button" class="btn btn-outline-primary" (click)="
-                    isCollapsed[comment?.id] = !isCollapsed[comment?.id]
-                  " [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"
-                                            (click)="viewreply(comment?.id)">
+                                        <button type="button" class="btn btn-outline-primary"  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"
+                                            (click)="viewreply(comment?.id)" [id]='comment?.id'>
                                             View Reply
                                         </button>
                                     </p>
-                                    <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed[comment?.id]">
-                                        <div class="card">
-                                            <div class="card-body" *ngFor="let reply of commentdata">
-                                                <div *ngFor="let user of userservice.userdetails">
-                                                    <p *ngIf="reply?.user_id == user?.user_id">
-                                                        <img class="comment-data-image" src="{{ user?.image }}" />
+                                    
+                                        <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed[comment?.id]">
+                                            <div class="card">
+                                                <div class="card-body" *ngFor="let reply of reply">
+                                                    <div *ngFor="let user of userservice.userdetails">
+                                                        <p *ngIf="reply?.user_id == user?.user_id">
+                                                            <img class="comment-data-image" src="{{ user?.image }}" />
 
-                                                        {{ user?.username }}
+                                                            {{ user?.username }}
 
-                                                        <b>{{ reply?.data }} </b>
-                                                        {{ moment(reply.date, "YYYYMMDDHHmmss").fromNow() }}
-                                                        <button mat-button>
-                                                            <mat-icon>thumb_up</mat-icon>
-                                                        </button>
-                                                        <button mat-button>
-                                                            <mat-icon>thumb_down</mat-icon>
-                                                        </button>
-                                                    </p>
+                                                            <b>{{ reply?.data }} </b>
+                                                            {{ moment(reply.date, "YYYYMMDDHHmmss").fromNow() }}
+                                                            <button mat-button>
+                                                                <mat-icon>thumb_up</mat-icon>
+                                                            </button>
+                                                            <button mat-button>
+                                                                <mat-icon>thumb_down</mat-icon>
+                                                            </button>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -115,26 +115,28 @@
             </mat-tab>
 
             <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon class="example-tab-icon">history</mat-icon>
-                        History
-                    </ng-template>
-                    <mat-card-content class="activity">
-                        <div *ngFor="let history of allhistory">
-                            <div *ngFor="let user of userservice.userdetails">
-                                <div *ngIf="history?.user_id == user?.user_id" class="history">
-                                    <img class="image" src="{{ user?.image }}" />
-                                    <div class="historydata">
-                                        {{ user?.username }} &nbsp;
-                                        <b> {{ history?.data }} &nbsp; </b>
-                                        {{ moment(history.date, "YYYYMMDDHHmmss").fromNow() }}
-                                    </div>
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon">history</mat-icon>
+                    History
+                </ng-template>
+                <mat-card-content class="activity">
+                    <div *ngFor="let history of allhistory">
+                        <div *ngFor="let user of userservice.userdetails">
+                            <div *ngIf="history?.user_id == user?.user_id" class="history">
+                                <img class="image" src="{{ user?.image }}" />
+                                <div class="historydata">
+                                    {{ user?.username }} &nbsp;
+                                    <b> {{ history?.data }} &nbsp; </b>
+                                    {{ moment(history.date, "YYYYMMDDHHmmss").fromNow() }}
                                 </div>
                             </div>
                         </div>
-                    </mat-card-content>
-                </mat-tab>
+                    </div>
+                </mat-card-content>
+            </mat-tab>
 
         </mat-tab-group>
     </mat-card>
 </div>
+
+

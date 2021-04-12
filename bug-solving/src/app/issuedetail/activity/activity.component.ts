@@ -20,6 +20,7 @@ export class ActivityComponent implements OnInit {
   public isCollapsed: boolean[] = [];
   public isCollapsedreply: boolean[] = [];
   allhistory: any;
+  reply: any;
   constructor(public userservice: UserserviceService,
     private activatedroute:ActivatedRoute) {}
 
@@ -33,6 +34,7 @@ export class ActivityComponent implements OnInit {
         try {
          this.commentdata= await this.userservice.getcomment(this.issue?.issue_id)
           // console.log("this is from activity component",this.commentdata)
+          // console.log(this.commentdata)
         } catch (error) {
           console.log(error)
         }
@@ -51,6 +53,7 @@ export class ActivityComponent implements OnInit {
         console.log(error)
       }
     )
+    
   }
 
   onfocus() {
@@ -77,7 +80,16 @@ export class ActivityComponent implements OnInit {
     this.commentgroup.reset();
   }
 
-  viewreply(id:any){
-    console.log(id)
-  }
+  async viewreply(comment_id:any){
+    // console.log(comment_id)
+    this.isCollapsed[comment_id] = !this.isCollapsed[comment_id]
+    console.log(this.isCollapsed[comment_id])
+    try {
+    this.reply =await this.userservice.getreply(comment_id)
+      // console.log(this.reply)
+    } catch (error) {
+      console.log(error)
+
+    }
+  } 
 }

@@ -1,7 +1,7 @@
 .container {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row-reverse;
+  flex-wrap: wrap;
   height: auto;
   width: auto;
   justify-content: center;
@@ -9,11 +9,10 @@
 
 .issuedetails {
   width: 50%;
-  height:100vh;
+  height: 100vh;
   background-color: whitesmoke;
   overflow: auto;
 }
-
 
 .activity {
   width: 50%;
@@ -21,31 +20,3 @@
   background-color: whitesmoke;
   overflow: auto;
 }
-
-
-
-.history {
-  /* background-color: rgb(224, 224, 245); */
-  height: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  /* padding-top: 10px; */
-  /* justify-content:space-around */
-  /* padding-top: 10px; */
-}
-
-.historydata {
-  margin-top: 8px;
-}
-.comment{
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(231, 231, 228);
-    margin: 5px;
-    padding: 10px;
-}
-
-
-

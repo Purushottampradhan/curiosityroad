@@ -9,7 +9,6 @@ import { identity, observable, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import * as moment from 'moment'; //for date function
 import db from 'firebase';
-import { promise } from 'selenium-webdriver';
 import { snapshotChanges } from '@angular/fire/database';
 
 // import 'firebaseui/dist/firebaseui.css'
@@ -18,13 +17,13 @@ import { snapshotChanges } from '@angular/fire/database';
 })
 export class UserserviceService implements OnInit {
   //variables
-  emailid: any;
   user = {
     user_id: '',
     username: '',
     image: '',
     email: '',
   };
+  
   uuid: any; //this is unique id for issue id
   val: any; //details of the project
   issue: any; //store all isssue list
@@ -39,15 +38,6 @@ export class UserserviceService implements OnInit {
   }; //store the data of history
 
   commentdetails = {
-    id: '',
-    data: '',
-    date: '',
-    issue_id: '',
-    user_id: '',
-    comment_id:'',
-  };
-
-  replydetails = {
     id: '',
     data: '',
     date: '',
@@ -85,41 +75,22 @@ export class UserserviceService implements OnInit {
   }
   ngOnInit(): void {}
 
-  //reply of comment submit
-  async reply() {
-    this.replydetails.id = uuidv4();
-    this.replydetails.user_id = this.user.user_id;
-    this.replydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
-    await this.firestore
-      .collection('reply')
-      .doc(this.replydetails.comment_id)
-      .collection('reply')
-      .doc(this.replydetails.id)
-      .set(this.replydetails)
-      .then(() => {
-        console.log('reply added');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   //get comment reply
-   getreply(id: any) {
+  getreply(comment_id: any) {
     return new Promise((resolve, reject) => {
-      this.firestore
-        .collection('reply')
-        .doc(id)
-        .collection('reply')
-        .valueChanges()
-        .subscribe((data) => {
-          if (data) {
-            resolve(data);
-            // console.log(data);
-          } else {
-            reject('no comment found');
-          }
-        });
+      firebase.firestore().collection('comment').where('comment_id', "==", `${comment_id}`).get().then((querySnapshot)=>{
+        var reply: any = [];
+        querySnapshot.forEach((doc)=>{
+          reply.push(doc.data())
+        })
+        if(reply.length){
+         // console.log(reply)
+          resolve(reply)
+        }
+        else{
+          reject("data not found")
+        }
+      })
     });
   }
 
@@ -128,15 +99,15 @@ export class UserserviceService implements OnInit {
     this.commentdetails.id = uuidv4();
     this.commentdetails.user_id = this.user.user_id;
     this.commentdetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
-    console.log(this.commentdetails)
+    console.log(this.commentdetails);
     await this.firestore
       .collection('comment')
       .doc(this.commentdetails.id)
       .set(this.commentdetails)
       .then(() => {
         // console.log(this.commentdetails)
-        this.commentdetails.comment_id='';
-        this.commentdetails.issue_id='';
+        this.commentdetails.comment_id = '';
+        this.commentdetails.issue_id = '';
         console.log('comment added');
       })
       .catch((error) => {
@@ -148,7 +119,7 @@ export class UserserviceService implements OnInit {
   getcomment(issue_id: any) {
     return new Promise((resolve, reject) => {
       // console.log(issue_id)
-      db.firestore()
+     db.firestore()
         .collection('comment')
         .where('issue_id', '==', `${issue_id}`)
         .onSnapshot((querySnapshot) => {
@@ -158,7 +129,8 @@ export class UserserviceService implements OnInit {
           });
           if (comment.length) {
             // console.log("this is from comment service",comment)
-            this.commentdata=comment
+            this.commentdata = comment;
+            // return comment
             resolve(comment);
           } else {
             reject('no comment found ');
@@ -174,8 +146,6 @@ export class UserserviceService implements OnInit {
     this.historydetails.date = moment().format('YYYY/MM/DD/HH/mm/ss');
     await this.firestore
       .collection('history')
-      .doc(issue_id)
-      .collection('historydetails')
       .doc(this.historydetails.id)
       .set(this.historydetails)
       .then(() => {
@@ -192,20 +162,26 @@ export class UserserviceService implements OnInit {
   gethistory(issue_id: any) {
     // console.log(issue_id)
     return new Promise((resolve, reject) => {
-      this.firestore
-        .collection('history')
-        .doc(issue_id)
-        .collection('historydetails')
-        .valueChanges()
-        .subscribe((data) => {
-          if (data) {
-            resolve(data);
-          } else {
-            reject('error geting history');
-          }
-        });
+      firebase.firestore().collection('history').where('issue_id', "==", `${issue_id}`).get().then((querySnapshot)=>{
+        var history: any = [];
+        querySnapshot.forEach((doc)=>{
+          history.push(doc.data())
+        })
+        if(history.length){
+         // console.log(reply)
+          resolve(history)
+        }
+        else{
+          reject("data history  not found")
+        }
+      })
     });
   }
+  
+
+  // example(data:any){
+  //   console.log( "this is from example function",data)
+  // }
 
   // example(issue_id:any){
   //  return new Promise((resolve,reject)=>{
@@ -216,7 +192,7 @@ export class UserserviceService implements OnInit {
   //       // console.log(snap.type=='added')
   //       arr.push(snap.payload.doc.data())
   //       // console.log(snap.payload.doc.data())
-        
+
   //     })
   //     // console.log(arr)
   //     if(arr){
@@ -288,7 +264,7 @@ export class UserserviceService implements OnInit {
 
   //get  user details
   getuser() {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       this.firestore
         .collection('users')
         .valueChanges()
@@ -296,14 +272,13 @@ export class UserserviceService implements OnInit {
           if (data) {
             this.userdetails = await data;
             // console.log(this.userdetails);
-            resolve(data)
+            resolve(data);
             // return this.userdetails
-          }else
-          {
-            reject("no data found")
+          } else {
+            reject('no data found');
           }
         });
-      });
+    });
   }
 
   //get one project details
